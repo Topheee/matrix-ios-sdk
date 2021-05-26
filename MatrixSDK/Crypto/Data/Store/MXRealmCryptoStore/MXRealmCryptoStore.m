@@ -337,7 +337,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
 
 + (instancetype)createStoreWithCredentials:(MXCredentials*)credentials
 {
-    NSLog(@"[MXRealmCryptoStore] createStore for %@:%@", credentials.userId, credentials.deviceId);
+    MXLogDebug(@"[MXRealmCryptoStore] createStore for %@:%@", credentials.userId, credentials.deviceId);
     
     RLMRealm *realm = [MXRealmCryptoStore realmForUser:credentials.userId andDevice:credentials.deviceId];
     
@@ -355,7 +355,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
 
 + (void)deleteStoreWithCredentials:(MXCredentials*)credentials
 {
-    NSLog(@"[MXRealmCryptoStore] deleteStore for %@:%@", credentials.userId, credentials.deviceId);
+    MXLogDebug(@"[MXRealmCryptoStore] deleteStore for %@:%@", credentials.userId, credentials.deviceId);
     
     // Delete db file directly
     // So that we can even delete corrupted realm db
@@ -365,7 +365,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
     
     if (![RLMRealm fileExistsForConfiguration:config])
     {
-        NSLog(@"[MXRealmCryptoStore] deleteStore: Realm db does not exist");
+        MXLogDebug(@"[MXRealmCryptoStore] deleteStore: Realm db does not exist");
         return;
     }
     
@@ -373,7 +373,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
     [RLMRealm deleteFilesForConfiguration:config error:&error];
     if (error)
     {
-        NSLog(@"[MXRealmCryptoStore] deleteStore: Error: %@", error);
+        MXLogDebug(@"[MXRealmCryptoStore] deleteStore: Error: %@", error);
         
         // The db is probably still opened elsewhere (RLMErrorAlreadyOpen), which means it is valid.
         // Use the old method to clear the db
@@ -381,21 +381,21 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         RLMRealm *realm = [MXRealmCryptoStore realmForUser:credentials.userId andDevice:credentials.deviceId];
         if (!error)
         {
-            NSLog(@"[MXRealmCryptoStore] deleteStore: Delete at least its content");
+            MXLogDebug(@"[MXRealmCryptoStore] deleteStore: Delete at least its content");
             [realm transactionWithBlock:^{
                 [realm deleteAllObjects];
             }];
         }
         else
         {
-            NSLog(@"[MXRealmCryptoStore] deleteStore: Cannot open realm. Error: %@", error);
+            MXLogDebug(@"[MXRealmCryptoStore] deleteStore: Cannot open realm. Error: %@", error);
         }
     }
 }
 
 - (instancetype)initWithCredentials:(MXCredentials *)credentials
 {
-    NSLog(@"[MXRealmCryptoStore] initWithCredentials for %@:%@", credentials.userId, credentials.deviceId);
+    MXLogDebug(@"[MXRealmCryptoStore] initWithCredentials for %@:%@", credentials.userId, credentials.deviceId);
     
     self = [super init];
     if (self)
@@ -413,13 +413,13 @@ RLM_ARRAY_TYPE(MXRealmSecret)
             // Make sure the device id corresponds
             if (account.deviceId && ![account.deviceId isEqualToString:credentials.deviceId])
             {
-                NSLog(@"[MXRealmCryptoStore] Credentials do not match");
+                MXLogDebug(@"[MXRealmCryptoStore] Credentials do not match");
                 [MXRealmCryptoStore deleteStoreWithCredentials:credentials];
                 return [MXRealmCryptoStore createStoreWithCredentials:credentials];
             }
         }
         
-        NSLog(@"[MXRealmCryptoStore] Schema version: %llu", account.realm.configuration.schemaVersion);
+        MXLogDebug(@"[MXRealmCryptoStore] Schema version: %llu", account.realm.configuration.schemaVersion);
     }
     return self;
 }
@@ -465,7 +465,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         account.olmAccountData = [NSKeyedArchiver archivedDataWithRootObject:olmAccount];
     }];
     
-    NSLog(@"[MXRealmCryptoStore] storeAccount in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeAccount in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (OLMAccount*)account
@@ -499,17 +499,17 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         }
         else
         {
-            NSLog(@"[MXRealmCryptoStore] performAccountOperationWithBlock. Error: Cannot build OLMAccount");
+            MXLogDebug(@"[MXRealmCryptoStore] performAccountOperationWithBlock. Error: Cannot build OLMAccount");
             block(nil);
         }
     }
     else
     {
-        NSLog(@"[MXRealmCryptoStore] performAccountOperationWithBlock. Error: No OLMAccount yet");
+        MXLogDebug(@"[MXRealmCryptoStore] performAccountOperationWithBlock. Error: No OLMAccount yet");
         block(nil);
     }
     
-    NSLog(@"[MXRealmCryptoStore] performAccountOperationWithBlock done in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] performAccountOperationWithBlock done in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (void)storeDeviceSyncToken:(NSString*)deviceSyncToken
@@ -561,7 +561,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         
     }];
     
-    NSLog(@"[MXRealmCryptoStore] storeDeviceForUser in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeDeviceForUser in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (MXDeviceInfo*)deviceWithDeviceId:(NSString*)deviceId forUser:(NSString*)userID
@@ -622,7 +622,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         }
     }];
     
-    NSLog(@"[MXRealmCryptoStore] storeDevicesForUser (count: %tu) in %.3fms", devices.count, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeDevicesForUser (count: %tu) in %.3fms", devices.count, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (NSDictionary<NSString*, MXDeviceInfo*>*)devicesForUser:(NSString*)userID
@@ -743,7 +743,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         }
     }];
     
-    NSLog(@"[MXRealmCryptoStore] storeAlgorithmForRoom (%@) in %.3fms", (isNew?@"NEW":@"UPDATE"), [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeAlgorithmForRoom (%@) in %.3fms", (isNew?@"NEW":@"UPDATE"), [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (NSString*)algorithmForRoom:(NSString*)roomId
@@ -776,7 +776,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         }
     }];
     
-    NSLog(@"[MXRealmCryptoStore] storeBlacklistUnverifiedDevicesInRoom (%@) in %.3fms", (isNew?@"NEW":@"UPDATE"), [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeBlacklistUnverifiedDevicesInRoom (%@) in %.3fms", (isNew?@"NEW":@"UPDATE"), [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (BOOL)blacklistUnverifiedDevicesInRoom:(NSString *)roomId
@@ -819,7 +819,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         }
     }];
     
-    NSLog(@"[MXRealmCryptoStore] storeSession (%@) in %.3fms", (isNew?@"NEW":@"UPDATE"), [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeSession (%@) in %.3fms", (isNew?@"NEW":@"UPDATE"), [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (MXOlmSession*)sessionWithDevice:(NSString*)deviceKey andSessionId:(NSString*)sessionId
@@ -862,13 +862,13 @@ RLM_ARRAY_TYPE(MXRealmSecret)
     }
     else
     {
-        NSLog(@"[MXRealmCryptoStore] performSessionOperationWithDevice. Error: olm session %@ not found", sessionId);
+        MXLogDebug(@"[MXRealmCryptoStore] performSessionOperationWithDevice. Error: olm session %@ not found", sessionId);
         block(nil);
     }
     
     [realm commitWriteTransaction];
     
-    NSLog(@"[MXRealmCryptoStore] performSessionOperationWithDevice done in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] performSessionOperationWithDevice done in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (NSArray<MXOlmSession*>*)sessionsWithDevice:(NSString*)deviceKey;
@@ -938,7 +938,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
     }];
     
     
-    NSLog(@"[MXRealmCryptoStore] storeInboundGroupSessions: store %@ keys (%@ new) in %.3fms", @(sessions.count), @(newCount), [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeInboundGroupSessions: store %@ keys (%@ new) in %.3fms", @(sessions.count), @(newCount), [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (MXOlmInboundGroupSession*)inboundGroupSessionWithId:(NSString*)sessionId andSenderKey:(NSString*)senderKey
@@ -948,7 +948,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
                                                                                 senderKey:senderKey];
     MXRealmOlmInboundGroupSession *realmSession = [MXRealmOlmInboundGroupSession objectsInRealm:self.realm where:@"sessionIdSenderKey = %@", sessionIdSenderKey].firstObject;
     
-    NSLog(@"[MXRealmCryptoStore] inboundGroupSessionWithId: %@ -> %@", sessionId, realmSession ? @"found" : @"not found");
+    MXLogDebug(@"[MXRealmCryptoStore] inboundGroupSessionWithId: %@ -> %@", sessionId, realmSession ? @"found" : @"not found");
     
     if (realmSession)
     {
@@ -956,7 +956,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         
         if (!session)
         {
-            NSLog(@"[MXRealmCryptoStore] inboundGroupSessionWithId: ERROR: Failed to create MXOlmInboundGroupSession object");
+            MXLogDebug(@"[MXRealmCryptoStore] inboundGroupSessionWithId: ERROR: Failed to create MXOlmInboundGroupSession object");
         }
     }
     
@@ -987,18 +987,18 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         }
         else
         {
-            NSLog(@"[MXRealmCryptoStore] performSessionOperationWithGroupSessionWithId. Error: Cannot build MXOlmInboundGroupSession for megolm session %@", sessionId);
+            MXLogDebug(@"[MXRealmCryptoStore] performSessionOperationWithGroupSessionWithId. Error: Cannot build MXOlmInboundGroupSession for megolm session %@", sessionId);
             block(nil);
         }    }
     else
     {
-        NSLog(@"[MXRealmCryptoStore] performSessionOperationWithGroupSessionWithId. Error: megolm session %@ not found", sessionId);
+        MXLogDebug(@"[MXRealmCryptoStore] performSessionOperationWithGroupSessionWithId. Error: megolm session %@ not found", sessionId);
         block(nil);
     }
     
     [realm commitWriteTransaction];
     
-    NSLog(@"[MXRealmCryptoStore] performSessionOperationWithGroupSessionWithId done in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] performSessionOperationWithGroupSessionWithId done in %.3fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (NSArray<MXOlmInboundGroupSession *> *)inboundGroupSessions
@@ -1066,7 +1066,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         storedSession = [[MXOlmOutboundGroupSession alloc] initWithSession:session roomId:roomId creationTime:realmSession.creationTime];
     }];
     
-    NSLog(@"[MXRealmCryptoStore] storeOutboundGroupSession: store 1 key (%lu new) in %.3fms", newCount, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeOutboundGroupSession: store 1 key (%lu new) in %.3fms", newCount, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
     
     return storedSession;
 }
@@ -1076,7 +1076,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
     OLMOutboundGroupSession *session;
     MXRealmOlmOutboundGroupSession *realmSession = [MXRealmOlmOutboundGroupSession objectsInRealm:self.realm where:@"roomId = %@", roomId].firstObject;
     
-    NSLog(@"[MXRealmCryptoStore] outboundGroupSessionWithRoomId: %@ -> %@", roomId, realmSession ? @"found" : @"not found");
+    MXLogDebug(@"[MXRealmCryptoStore] outboundGroupSessionWithRoomId: %@ -> %@", roomId, realmSession ? @"found" : @"not found");
     
     if (realmSession)
     {
@@ -1084,7 +1084,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         
         if (!session)
         {
-            NSLog(@"[MXRealmCryptoStore] outboundGroupSessionWithRoomId: ERROR: Failed to create OLMOutboundGroupSession object");
+            MXLogDebug(@"[MXRealmCryptoStore] outboundGroupSessionWithRoomId: ERROR: Failed to create OLMOutboundGroupSession object");
         }
     }
     
@@ -1109,7 +1109,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         [sessions addObject:session];
     }
     
-    NSLog(@"[MXRealmCryptoStore] outboundGroupSessions: found %lu entries", sessions.count);
+    MXLogDebug(@"[MXRealmCryptoStore] outboundGroupSessions: found %lu entries", sessions.count);
     return sessions;
 }
 
@@ -1120,7 +1120,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         RLMResults<MXRealmOlmOutboundGroupSession *> *realmSessions = [MXRealmOlmOutboundGroupSession objectsInRealm:realm where:@"roomId = %@", roomId];
         
         [realm deleteObjects:realmSessions];
-        NSLog(@"[MXRealmCryptoStore] removeOutboundGroupSessionWithRoomId%@: removed %lu entries", roomId, realmSessions.count);
+        MXLogDebug(@"[MXRealmCryptoStore] removeOutboundGroupSessionWithRoomId%@: removed %lu entries", roomId, realmSessions.count);
     }];
 }
 
@@ -1139,14 +1139,14 @@ RLM_ARRAY_TYPE(MXRealmSecret)
                 MXRealmUser *realmUser = [MXRealmUser objectsInRealm:realm where:@"userId = %@", userId].firstObject;
                 if (!realmUser)
                 {
-                    NSLog(@"[MXRealmCryptoStore] storeSharedDevices cannot find user with the ID %@", userId);
+                    MXLogDebug(@"[MXRealmCryptoStore] storeSharedDevices cannot find user with the ID %@", userId);
                     continue;
                 }
                 
                 MXRealmDeviceInfo *realmDevice = [[realmUser.devices objectsWhere:@"deviceId = %@", deviceId] firstObject];
                 if (!realmDevice)
                 {
-                    NSLog(@"[MXRealmCryptoStore] storeSharedDevices cannot find device with the ID %@", deviceId);
+                    MXLogDebug(@"[MXRealmCryptoStore] storeSharedDevices cannot find device with the ID %@", deviceId);
                     continue;
                 }
                 
@@ -1161,7 +1161,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         }
     }];
     
-    NSLog(@"[MXRealmCryptoStore] storeSharedDevices (count: %tu) in %.3fms", devices.count, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeSharedDevices (count: %tu) in %.3fms", devices.count, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
 }
 
 - (MXUsersDevicesMap<NSNumber *> *)sharedDevicesForOutboundGroupSessionInRoomWithId:(NSString *)roomId sessionId:(NSString *)sessionId
@@ -1179,13 +1179,13 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         MXDeviceInfo *deviceInfo = [NSKeyedUnarchiver unarchiveObjectWithData:sharedInfo.device.deviceInfoData];
         if (!deviceInfo)
         {
-            NSLog(@"[MXRealmCryptoStore] sharedDevicesForOutboundGroupSessionInRoomWithId cannot unarchive deviceInfo");
+            MXLogDebug(@"[MXRealmCryptoStore] sharedDevicesForOutboundGroupSessionInRoomWithId cannot unarchive deviceInfo");
             continue;
         }
         [devices setObject:sharedInfo.messageIndex forUser:deviceInfo.userId andDevice:deviceInfo.deviceId];
     }
     
-    NSLog(@"[MXRealmCryptoStore] sharedDevicesForOutboundGroupSessionInRoomWithId (count: %tu) in %.3fms", results.count, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] sharedDevicesForOutboundGroupSessionInRoomWithId (count: %tu) in %.3fms", results.count, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
     
     return devices;
 }
@@ -1478,7 +1478,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
             NSData *encryptedSecret = [MXAes encrypt:secretData aesKey:key iv:iv error:&error];
             if (error)
             {
-                NSLog(@"[MXRealmCryptoStore] storeSecret: Encryption failed for secret %@. Error: %@", secretId, error);
+                MXLogDebug(@"[MXRealmCryptoStore] storeSecret: Encryption failed for secret %@. Error: %@", secretId, error);
                 return;
             }
             
@@ -1510,14 +1510,14 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         NSData *key = self.encryptionKey;
         if (!key)
         {
-            NSLog(@"[MXRealmCryptoStore] secretWithSecretId: ERROR: Key to decrypt secret %@ is unavailable", secretId);
+            MXLogDebug(@"[MXRealmCryptoStore] secretWithSecretId: ERROR: Key to decrypt secret %@ is unavailable", secretId);
             return nil;
         }
         
         NSData *iv = realmSecret.iv;
         if (!iv)
         {
-            NSLog(@"[MXRealmCryptoStore] secretWithSecretId: ERROR: IV for %@ is unavailable", secretId);
+            MXLogDebug(@"[MXRealmCryptoStore] secretWithSecretId: ERROR: IV for %@ is unavailable", secretId);
             return nil;
         }
         
@@ -1525,7 +1525,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         NSData *secretData = [MXAes decrypt:realmSecret.encryptedSecret aesKey:key iv:iv error:&error];
         if (error || !secretData)
         {
-            NSLog(@"[MXRealmCryptoStore] secretWithSecretId: Decryption failed for secret %@. Error: %@", secretId, error);
+            MXLogDebug(@"[MXRealmCryptoStore] secretWithSecretId: Decryption failed for secret %@. Error: %@", secretId, error);
             return nil;
         }
         
@@ -1631,18 +1631,18 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         realm = [RLMRealm realmWithConfiguration:config error:&error];
         if (error)
         {
-            NSLog(@"[MXRealmCryptoStore] realmForUser gets error: %@", error);
+            MXLogDebug(@"[MXRealmCryptoStore] realmForUser gets error: %@", error);
             
             // Remove the db file
             NSError *error;
             [[NSFileManager defaultManager] removeItemAtPath:config.fileURL.path error:&error];
-            NSLog(@"[MXRealmCryptoStore] removeItemAtPath error result: %@", error);
+            MXLogDebug(@"[MXRealmCryptoStore] removeItemAtPath error result: %@", error);
             
             // And try again
             realm = [RLMRealm realmWithConfiguration:config error:&error];
             if (!realm)
             {
-                NSLog(@"[MXRealmCryptoStore] realmForUser still gets after reset. Error: %@", error);
+                MXLogDebug(@"[MXRealmCryptoStore] realmForUser still gets after reset. Error: %@", error);
             }
             
             // Report this db reset to higher modules
@@ -1657,13 +1657,13 @@ RLM_ARRAY_TYPE(MXRealmSecret)
     
     if (cleanDuplicatedDevices)
     {
-        NSLog(@"[MXRealmCryptoStore] Do cleaning for duplicating devices");
+        MXLogDebug(@"[MXRealmCryptoStore] Do cleaning for duplicating devices");
         
         NSUInteger before = [MXRealmDeviceInfo allObjectsInRealm:realm].count;
         [self cleanDuplicatedDevicesInRealm:realm];
         NSUInteger after = [MXRealmDeviceInfo allObjectsInRealm:realm].count;
         
-        NSLog(@"[MXRealmCryptoStore] Cleaning for duplicating devices completed. There are now %@ devices. There were %@ before. %@ devices have been removed.", @(after), @(before), @(before - after));
+        MXLogDebug(@"[MXRealmCryptoStore] Cleaning for duplicating devices completed. There are now %@ devices. There were %@ before. %@ devices have been removed.", @(after), @(before), @(before - after));
     }
     
     // Wait for completion of other operations on this realm launched from other threads
@@ -1730,7 +1730,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
     NSURL *fileFolderURL = fileURL.URLByDeletingLastPathComponent;
     if (![NSFileManager.defaultManager fileExistsAtPath:fileFolderURL.path])
     {
-        NSLog(@"[MXRealmCryptoStore] ensurePathExistenceForFileAtFileURL: Create full path hierarchy for %@", fileURL);
+        MXLogDebug(@"[MXRealmCryptoStore] ensurePathExistenceForFileAtFileURL: Create full path hierarchy for %@", fileURL);
         [[NSFileManager defaultManager] createDirectoryAtPath:fileFolderURL.path withIntermediateDirectories:YES attributes:nil error:nil];
     }
 }
@@ -1774,7 +1774,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
             static BOOL logDBFileSizeAtLaunch = YES;
             if (logDBFileSizeAtLaunch)
             {
-                NSLog(@"[MXRealmCryptoStore] Realm DB file size (in bytes): %lu, used (in bytes): %lu", (unsigned long)totalBytes, (unsigned long)bytesUsed);
+                MXLogDebug(@"[MXRealmCryptoStore] Realm DB file size (in bytes): %lu, used (in bytes): %lu", (unsigned long)totalBytes, (unsigned long)bytesUsed);
                 logDBFileSizeAtLaunch = NO;
             }
             
@@ -1782,7 +1782,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
             BOOL result = (float)((float)bytesUsed / totalBytes) < 0.5;
             if (result)
             {
-                NSLog(@"[MXRealmCryptoStore] Will compact database: File size (in bytes): %lu, used (in bytes): %lu", (unsigned long)totalBytes, (unsigned long)bytesUsed);
+                MXLogDebug(@"[MXRealmCryptoStore] Will compact database: File size (in bytes): %lu, used (in bytes): %lu", (unsigned long)totalBytes, (unsigned long)bytesUsed);
             }
             
             return result;
@@ -1798,7 +1798,7 @@ static BOOL shouldCompactOnLaunch = YES;
 
 + (void)setShouldCompactOnLaunch:(BOOL)theShouldCompactOnLaunch
 {
-    NSLog(@"[MXRealmCryptoStore] setShouldCompactOnLaunch: %@", theShouldCompactOnLaunch ? @"YES" : @"NO");
+    MXLogDebug(@"[MXRealmCryptoStore] setShouldCompactOnLaunch: %@", theShouldCompactOnLaunch ? @"YES" : @"NO");
     shouldCompactOnLaunch = theShouldCompactOnLaunch;
 }
 
@@ -1852,7 +1852,7 @@ static BOOL shouldCompactOnLaunch = YES;
     
     if (oldSchemaVersion < kMXRealmCryptoStoreVersion)
     {
-        NSLog(@"[MXRealmCryptoStore] Required migration detected. oldSchemaVersion: %llu - current: %tu", oldSchemaVersion, kMXRealmCryptoStoreVersion);
+        MXLogDebug(@"[MXRealmCryptoStore] Required migration detected. oldSchemaVersion: %llu - current: %tu", oldSchemaVersion, kMXRealmCryptoStoreVersion);
         
         switch (oldSchemaVersion)
         {
@@ -1862,11 +1862,11 @@ static BOOL shouldCompactOnLaunch = YES;
                 // and olm sessions were duplicated:
                 // https://github.com/matrix-org/matrix-ios-sdk/issues/227
                 
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #1 -> #2");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #1 -> #2");
                 
                 // We need to update the db because a sessionId property has been added MXRealmOlmSession
                 // to ensure uniqueness
-                NSLog(@"[MXRealmCryptoStore]    Add sessionId field to all MXRealmOlmSession objects");
+                MXLogDebug(@"[MXRealmCryptoStore]    Add sessionId field to all MXRealmOlmSession objects");
                 [migration enumerateObjects:MXRealmOlmSession.className block:^(RLMObject *oldObject, RLMObject *newObject) {
                     
                     OLMSession *olmSession =  [NSKeyedUnarchiver unarchiveObjectWithData:oldObject[@"olmSessionData"]];
@@ -1875,7 +1875,7 @@ static BOOL shouldCompactOnLaunch = YES;
                 }];
                 
                 // We need to clean the db from duplicated MXRealmOlmSessions
-                NSLog(@"[MXRealmCryptoStore]    Make MXRealmOlmSession objects unique for the (sessionId, deviceKey) pair");
+                MXLogDebug(@"[MXRealmCryptoStore]    Make MXRealmOlmSession objects unique for the (sessionId, deviceKey) pair");
                 __block NSUInteger deleteCount = 0;
                 NSMutableArray<NSString*> *olmSessionUniquePairs = [NSMutableArray array];
                 [migration enumerateObjects:MXRealmOlmSession.className block:^(RLMObject *oldObject, RLMObject *newObject) {
@@ -1888,16 +1888,16 @@ static BOOL shouldCompactOnLaunch = YES;
                     }
                     else
                     {
-                        NSLog(@"[MXRealmCryptoStore]        - delete MXRealmOlmSession: %@", olmSessionUniquePair);
+                        MXLogDebug(@"[MXRealmCryptoStore]        - delete MXRealmOlmSession: %@", olmSessionUniquePair);
                         [migration deleteObject:newObject];
                         deleteCount++;
                     }
                 }];
                 
-                NSLog(@"[MXRealmCryptoStore]    -> deleted %tu duplicated MXRealmOlmSession objects", deleteCount);
+                MXLogDebug(@"[MXRealmCryptoStore]    -> deleted %tu duplicated MXRealmOlmSession objects", deleteCount);
                 
                 // And from duplicated MXRealmOlmInboundGroupSessions
-                NSLog(@"[MXRealmCryptoStore]    Make MXRealmOlmInboundGroupSession objects unique for the (sessionId, senderKey) pair");
+                MXLogDebug(@"[MXRealmCryptoStore]    Make MXRealmOlmInboundGroupSession objects unique for the (sessionId, senderKey) pair");
                 deleteCount = 0;
                 NSMutableArray<NSString*> *olmInboundGroupSessionUniquePairs = [NSMutableArray array];
                 [migration enumerateObjects:MXRealmOlmInboundGroupSession.className block:^(RLMObject *oldObject, RLMObject *newObject) {
@@ -1910,36 +1910,36 @@ static BOOL shouldCompactOnLaunch = YES;
                     }
                     else
                     {
-                        NSLog(@"[MXRealmCryptoStore]        - delete MXRealmOlmInboundGroupSession: %@", olmInboundGroupSessionUniquePair);
+                        MXLogDebug(@"[MXRealmCryptoStore]        - delete MXRealmOlmInboundGroupSession: %@", olmInboundGroupSessionUniquePair);
                         [migration deleteObject:newObject];
                         deleteCount++;
                     }
                 }];
                 
-                NSLog(@"[MXRealmCryptoStore]    -> deleted %tu duplicated MXRealmOlmInboundGroupSession objects", deleteCount);
+                MXLogDebug(@"[MXRealmCryptoStore]    -> deleted %tu duplicated MXRealmOlmInboundGroupSession objects", deleteCount);
                 
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #1 -> #2 completed");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #1 -> #2 completed");
             }
                 
             case 2:
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #2 -> #3: Nothing to do (add MXRealmOlmAccount.deviceSyncToken)");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #2 -> #3: Nothing to do (add MXRealmOlmAccount.deviceSyncToken)");
                 
             case 3:
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #3 -> #4: Nothing to do (add MXRealmOlmAccount.globalBlacklistUnverifiedDevices & MXRealmRoomAlgortithm.blacklistUnverifiedDevices)");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #3 -> #4: Nothing to do (add MXRealmOlmAccount.globalBlacklistUnverifiedDevices & MXRealmRoomAlgortithm.blacklistUnverifiedDevices)");
                 
             case 4:
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #4 -> #5: Nothing to do (add deviceTrackingStatusData)");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #4 -> #5: Nothing to do (add deviceTrackingStatusData)");
                 
             case 5:
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #5 -> #6: Nothing to do (remove MXRealmOlmAccount.deviceAnnounced)");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #5 -> #6: Nothing to do (remove MXRealmOlmAccount.deviceAnnounced)");
                 
             case 6:
             {
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #6 -> #7");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #6 -> #7");
                 
                 // We need to update the db because a sessionId property has been added to MXRealmOlmInboundGroupSession
                 // to ensure uniqueness
-                NSLog(@"[MXRealmCryptoStore]    Add sessionIdSenderKey, a combined primary key, to all MXRealmOlmInboundGroupSession objects");
+                MXLogDebug(@"[MXRealmCryptoStore]    Add sessionIdSenderKey, a combined primary key, to all MXRealmOlmInboundGroupSession objects");
                 [migration enumerateObjects:MXRealmOlmInboundGroupSession.className block:^(RLMObject *oldObject, RLMObject *newObject) {
                     
                     newObject[@"sessionIdSenderKey"] = [MXRealmOlmInboundGroupSession primaryKeyWithSessionId:oldObject[@"sessionId"]
@@ -1947,7 +1947,7 @@ static BOOL shouldCompactOnLaunch = YES;
                 }];
                 
                 // We need to update the db because a identityKey property has been added to MXRealmDeviceInfo
-                NSLog(@"[MXRealmCryptoStore]    Add identityKey to all MXRealmDeviceInfo objects");
+                MXLogDebug(@"[MXRealmCryptoStore]    Add identityKey to all MXRealmDeviceInfo objects");
                 [migration enumerateObjects:MXRealmDeviceInfo.className block:^(RLMObject *oldObject, RLMObject *newObject) {
                     
                     MXDeviceInfo *device = [NSKeyedUnarchiver unarchiveObjectWithData:oldObject[@"deviceInfoData"]];
@@ -1958,12 +1958,12 @@ static BOOL shouldCompactOnLaunch = YES;
                     }
                 }];
                 
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #6 -> #7 completed");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #6 -> #7 completed");
             }
                 
             case 7:
             {
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #7 -> #8");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #7 -> #8");
                 
                 // This schema update is only for cleaning duplicated devices.
                 // With the Realm Obj-C SDK, the realm instance is not public. We cannot
@@ -1977,22 +1977,22 @@ static BOOL shouldCompactOnLaunch = YES;
                 // Use the last olm session that got a message
                 // https://github.com/vector-im/riot-ios/issues/2128
                 
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #8 -> #9");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #8 -> #9");
                 
-                NSLog(@"[MXRealmCryptoStore]    Add lastReceivedMessageTs = 0 to all MXRealmOlmSession objects");
+                MXLogDebug(@"[MXRealmCryptoStore]    Add lastReceivedMessageTs = 0 to all MXRealmOlmSession objects");
                 [migration enumerateObjects:MXRealmOlmSession.className block:^(RLMObject *oldObject, RLMObject *newObject) {
                     
                     newObject[@"lastReceivedMessageTs"] = @(0);
                 }];
                 
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #8 -> #9 completed");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #8 -> #9 completed");
             }
                 
             case 9:
             {
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #9 -> #10");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #9 -> #10");
                 
-                NSLog(@"[MXRealmCryptoStore]    Add requestBodyHash to all MXRealmOutgoingRoomKeyRequest objects");
+                MXLogDebug(@"[MXRealmCryptoStore]    Add requestBodyHash to all MXRealmOutgoingRoomKeyRequest objects");
                 [migration enumerateObjects:MXRealmOutgoingRoomKeyRequest.className block:^(RLMObject *oldObject, RLMObject *newObject) {
                     
                     NSDictionary *requestBody = [MXTools deserialiseJSONString:oldObject[@"requestBodyString"]];
@@ -2007,15 +2007,15 @@ static BOOL shouldCompactOnLaunch = YES;
             }
                 
             case 10:
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #10 -> #11: Nothing to do (added optional MXRealmUser.crossSigningKeys)");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #10 -> #11: Nothing to do (added optional MXRealmUser.crossSigningKeys)");
                 
             case 11:
             {
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #10 -> #11");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #10 -> #11");
                 
                 // Because of https://github.com/vector-im/riot-ios/issues/2896, algorithms were not stored
                 // Fix it by defaulting to usual values
-                NSLog(@"[MXRealmCryptoStore]    Fix missing algorithms to all MXRealmDeviceInfo objects");
+                MXLogDebug(@"[MXRealmCryptoStore]    Fix missing algorithms to all MXRealmDeviceInfo objects");
                 
                 [migration enumerateObjects:MXRealmDeviceInfo.className block:^(RLMObject *oldObject, RLMObject *newObject) {
                     
@@ -2033,11 +2033,11 @@ static BOOL shouldCompactOnLaunch = YES;
                 
             case 12:
             {
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #12 -> #13");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #12 -> #13");
                 
                 // Ìntroduction of MXCryptoStore.cryptoVersion
                 // Set the default value
-                NSLog(@"[MXRealmCryptoStore]    Add new MXRealmOlmAccount.cryptoVersion. Set it to MXCryptoVersion1");
+                MXLogDebug(@"[MXRealmCryptoStore]    Add new MXRealmOlmAccount.cryptoVersion. Set it to MXCryptoVersion1");
                 
                 [migration enumerateObjects:MXRealmOlmAccount.className block:^(RLMObject *oldObject, RLMObject *newObject) {
                     newObject[@"cryptoVersion"] = @(MXCryptoVersion1);
@@ -2045,13 +2045,13 @@ static BOOL shouldCompactOnLaunch = YES;
             }
                 
             case 13:
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #13 -> #14: Nothing to do (added MXRealmOlmOutboundGroupSession)");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #13 -> #14: Nothing to do (added MXRealmOlmOutboundGroupSession)");
                 
             case 14:
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #14 -> #15: Nothing to do (added MXRealmSharedOutboundSession)");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #14 -> #15: Nothing to do (added MXRealmSharedOutboundSession)");
                 
             case 15:
-                NSLog(@"[MXRealmCryptoStore] Migration from schema #15 -> #16: Nothing to do (added optional MXRealmSecret.encryptedSecret)");
+                MXLogDebug(@"[MXRealmCryptoStore] Migration from schema #15 -> #16: Nothing to do (added optional MXRealmSecret.encryptedSecret)");
         }
     }
     

@@ -18,6 +18,8 @@
 
 #import "MXLogger.h"
 
+#import "MXLog.h"
+
 @interface MXLoggerUnitTests : XCTestCase
 
 @end
@@ -29,7 +31,7 @@
     [MXLogger redirectNSLogToFiles:YES];
 
     NSString *log = [NSString stringWithFormat:@"testLogFileContent: %@", [NSDate date]];
-    NSLog(@"%@", log);
+    MXLogDebug(@"%@", log);
 
     [MXLogger redirectNSLogToFiles:NO];
 
@@ -52,7 +54,7 @@
     [MXLogger redirectNSLogToFiles:YES];
 
     NSString *log = [NSString stringWithFormat:@"testLogFileContent: %@", [NSDate date]];
-    NSLog(@"%@", log);
+    MXLogDebug(@"%@", log);
 
     [MXLogger redirectNSLogToFiles:NO];
 

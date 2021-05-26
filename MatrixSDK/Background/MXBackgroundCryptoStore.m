@@ -58,7 +58,7 @@ NSString *const MXBackgroundCryptoStoreUserIdSuffix = @":bgCryptoStore";
         else
         {
             // Should never happen
-            NSLog(@"[MXBackgroundCryptoStore] initWithCredentials: Warning: createStoreWithCredentials: %@:%@", credentials.userId, credentials.deviceId);
+            MXLogDebug(@"[MXBackgroundCryptoStore] initWithCredentials: Warning: createStoreWithCredentials: %@:%@", credentials.userId, credentials.deviceId);
             cryptoStore = [MXRealmCryptoStore createStoreWithCredentials:credentials];
         }
         
@@ -66,18 +66,18 @@ NSString *const MXBackgroundCryptoStoreUserIdSuffix = @":bgCryptoStore";
         
         if (resetBackgroundCryptoStore)
         {
-            NSLog(@"[MXBackgroundCryptoStore] initWithCredentials: Delete existing bgCryptoStore if any");
+            MXLogDebug(@"[MXBackgroundCryptoStore] initWithCredentials: Delete existing bgCryptoStore if any");
             [MXRealmCryptoStore deleteStoreWithCredentials:bgCredentials];
         }
         
         if ([MXRealmCryptoStore hasDataForCredentials:bgCredentials])
         {
-            NSLog(@"[MXBackgroundCryptoStore] initWithCredentials: Reuse existing bgCryptoStore");
+            MXLogDebug(@"[MXBackgroundCryptoStore] initWithCredentials: Reuse existing bgCryptoStore");
             bgCryptoStore = [[MXRealmCryptoStore alloc] initWithCredentials:bgCredentials];
         }
         else
         {
-            NSLog(@"[MXBackgroundCryptoStore] initWithCredentials: Create bgCryptoStore");
+            MXLogDebug(@"[MXBackgroundCryptoStore] initWithCredentials: Create bgCryptoStore");
             bgCryptoStore = [MXRealmCryptoStore createStoreWithCredentials:bgCredentials];
         }
     }
@@ -133,7 +133,7 @@ NSString *const MXBackgroundCryptoStoreUserIdSuffix = @":bgCryptoStore";
 - (void)setAccount:(OLMAccount*)account
 {
     // Should never happen
-    NSLog(@"[MXBackgroundCryptoStore] setAccount: identityKeys: %@", account.identityKeys);
+    MXLogDebug(@"[MXBackgroundCryptoStore] setAccount: identityKeys: %@", account.identityKeys);
     
     [cryptoStore setAccount:account];
     [bgCryptoStore setAccount:account];
@@ -145,7 +145,7 @@ NSString *const MXBackgroundCryptoStoreUserIdSuffix = @":bgCryptoStore";
     // If needed, transfer data from cryptoStore to bgCryptoStore first
     if (!bgCryptoStore.account)
     {
-        NSLog(@"[MXBackgroundCryptoStore] performAccountOperationWithBlock: Transfer data from cryptoStore to bgCryptoStore");
+        MXLogDebug(@"[MXBackgroundCryptoStore] performAccountOperationWithBlock: Transfer data from cryptoStore to bgCryptoStore");
         [bgCryptoStore setAccount:cryptoStore.account];
     }
     
@@ -164,7 +164,7 @@ NSString *const MXBackgroundCryptoStoreUserIdSuffix = @":bgCryptoStore";
         olmSession = [cryptoStore sessionWithDevice:deviceKey andSessionId:sessionId];
         if (olmSession)
         {
-            NSLog(@"[MXBackgroundCryptoStore] performSessionOperationWithDevice: Transfer data for %@ from cryptoStore to bgCryptoStore", sessionId);
+            MXLogDebug(@"[MXBackgroundCryptoStore] performSessionOperationWithDevice: Transfer data for %@ from cryptoStore to bgCryptoStore", sessionId);
             [bgCryptoStore storeSession:olmSession forDevice:deviceKey];
         }
     }
@@ -226,7 +226,7 @@ NSString *const MXBackgroundCryptoStoreUserIdSuffix = @":bgCryptoStore";
         inboundGroupSession = [cryptoStore inboundGroupSessionWithId:sessionId andSenderKey:senderKey];
         if (inboundGroupSession)
         {
-            NSLog(@"[MXBackgroundCryptoStore] performSessionOperationWithGroupSessionWithId: Transfer data for %@ from cryptoStore to bgCryptoStore", sessionId);
+            MXLogDebug(@"[MXBackgroundCryptoStore] performSessionOperationWithGroupSessionWithId: Transfer data for %@ from cryptoStore to bgCryptoStore", sessionId);
             [bgCryptoStore storeInboundGroupSessions:@[inboundGroupSession]];
         }
     }
