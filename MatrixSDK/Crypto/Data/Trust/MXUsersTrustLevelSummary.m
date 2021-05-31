@@ -44,10 +44,10 @@
     self = [self init];
     if (self)
     {
-        NSUInteger usersCount = [aDecoder decodeIntegerForKey:@"usersCount"];
-        NSUInteger trustedUsersCount = [aDecoder decodeIntegerForKey:@"trustedUsersCount"];
-        NSUInteger devicesCount = [aDecoder decodeIntegerForKey:@"devicesCount"];
-        NSUInteger trustedDevicesCount = [aDecoder decodeIntegerForKey:@"trustedDevicesCount"];
+        int64_t usersCount = [aDecoder decodeInt64ForKey:@"usersCount"];
+        int64_t trustedUsersCount = [aDecoder decodeInt64ForKey:@"trustedUsersCount"];
+        int64_t devicesCount = [aDecoder decodeInt64ForKey:@"devicesCount"];
+        int64_t trustedDevicesCount = [aDecoder decodeInt64ForKey:@"trustedDevicesCount"];
         
         self.trustedUsersProgress = [NSProgress progressWithTotalUnitCount:usersCount];
         self.trustedUsersProgress.completedUnitCount = trustedUsersCount;
@@ -60,10 +60,10 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeInteger:self.trustedUsersProgress.totalUnitCount forKey:@"usersCount"];
-    [aCoder encodeInteger:self.trustedUsersProgress.completedUnitCount forKey:@"trustedUsersCount"];
-    [aCoder encodeInteger:self.trustedDevicesProgress.totalUnitCount forKey:@"devicesCount"];
-    [aCoder encodeInteger:self.trustedDevicesProgress.completedUnitCount forKey:@"trustedDevicesCount"];
+    [aCoder encodeInt64:self.trustedUsersProgress.totalUnitCount forKey:@"usersCount"];
+    [aCoder encodeInt64:self.trustedUsersProgress.completedUnitCount forKey:@"trustedUsersCount"];
+    [aCoder encodeInt64:self.trustedDevicesProgress.totalUnitCount forKey:@"devicesCount"];
+    [aCoder encodeInt64:self.trustedDevicesProgress.completedUnitCount forKey:@"trustedDevicesCount"];
 }
 
 
