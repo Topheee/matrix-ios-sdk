@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString *reaction;
 @property NSString *eventId;
 @property NSString *roomId;
-@property NSInteger originServerTs;
+@property uint64_t originServerTs;
 @property (nonatomic) NSString *reactionEventId;
 
 // We need a primary key to use [RLMRealm addOrUpdateObject]
