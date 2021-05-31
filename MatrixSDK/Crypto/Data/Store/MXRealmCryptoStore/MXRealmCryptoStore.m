@@ -1066,7 +1066,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         storedSession = [[MXOlmOutboundGroupSession alloc] initWithSession:session roomId:roomId creationTime:realmSession.creationTime];
     }];
     
-    NSLog(@"[MXRealmCryptoStore] storeOutboundGroupSession: store 1 key (%lu new) in %.3fms", newCount, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+	NSLog(@"[MXRealmCryptoStore] storeOutboundGroupSession: store 1 key (%lu new) in %.3fms", (unsigned long)newCount, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
     
     return storedSession;
 }
@@ -1109,7 +1109,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         [sessions addObject:session];
     }
     
-    NSLog(@"[MXRealmCryptoStore] outboundGroupSessions: found %lu entries", sessions.count);
+	NSLog(@"[MXRealmCryptoStore] outboundGroupSessions: found %lu entries", (unsigned long)sessions.count);
     return sessions;
 }
 
@@ -1120,7 +1120,7 @@ RLM_ARRAY_TYPE(MXRealmSecret)
         RLMResults<MXRealmOlmOutboundGroupSession *> *realmSessions = [MXRealmOlmOutboundGroupSession objectsInRealm:realm where:@"roomId = %@", roomId];
         
         [realm deleteObjects:realmSessions];
-        NSLog(@"[MXRealmCryptoStore] removeOutboundGroupSessionWithRoomId%@: removed %lu entries", roomId, realmSessions.count);
+		NSLog(@"[MXRealmCryptoStore] removeOutboundGroupSessionWithRoomId%@: removed %lu entries", roomId, (unsigned long)realmSessions.count);
     }];
 }
 
