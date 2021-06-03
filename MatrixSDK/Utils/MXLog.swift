@@ -15,7 +15,6 @@
 //
 
 import Foundation
-import SwiftyBeaver
 
 /// Various MXLog configuration options. Used in conjunction with `MXLog.configure()`
 @objc public class MXLogConfiguration: NSObject {
@@ -46,11 +45,44 @@ import SwiftyBeaver
     case error
 }
 
-private var logger: SwiftyBeaver.Type = {
-    let logger = SwiftyBeaver.self
-    MXLog.configureLogger(logger, withConfiguration:MXLogConfiguration())
-    return logger
-}()
+class Logger {
+	func verbose(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		if let theContext = context {
+			NSLog("\(theContext) \(file) \(line) \(function) \(message)")
+		} else {
+			NSLog("\(file) \(line) \(function) \(message)")
+		}
+	}
+	func verbose(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose(String(describing: something), file, function, line: line, context: context)
+	}
+	func debug(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("DEBUG: \(message)", file, function, line: line, context: context)
+	}
+	func debug(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("DEBUG: \(String(describing: something))", file, function, line: line, context: context)
+	}
+	func info(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("DEBUG: \(message)", file, function, line: line, context: context)
+	}
+	func info(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("DEBUG: \(String(describing: something))", file, function, line: line, context: context)
+	}
+	func warning(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("DEBUG: \(message)", file, function, line: line, context: context)
+	}
+	func warning(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("DEBUG: \(String(describing: something))", file, function, line: line, context: context)
+	}
+	func error(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("DEBUG: \(message)", file, function, line: line, context: context)
+	}
+	func error(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("DEBUG: \(String(describing: something))", file, function, line: line, context: context)
+	}
+}
+
+private let logger = Logger()
 
 /**
  Logging utility that provies multiple logging levels as well as file output and rolling.
@@ -65,7 +97,6 @@ private var logger: SwiftyBeaver.Type = {
     /// - Parameters:
     ///     - configuration: the `MXLogConfiguration` instance to use
     @objc static public func configure(_ configuration: MXLogConfiguration) {
-        configureLogger(logger, withConfiguration: configuration)
     }
     
     public static func verbose(_ message: @autoclosure () -> Any, _
@@ -116,65 +147,5 @@ private var logger: SwiftyBeaver.Type = {
     @available(swift, obsoleted: 5.4)
     @objc public static func logError(_ message: String, file: String, function: String, line: Int) {
         logger.error(message, file, function, line: line)
-    }
-    
-    public static func failure(_ message: @autoclosure () -> Any, _
-                                file: String = #file, _ function: String = #function, line: Int = #line, context: Any? = nil) {
-        logger.error(message(), file, function, line: line, context: context)
-        #if DEBUG
-        assertionFailure("\(message())")
-        #endif
-    }
-    
-    @available(swift, obsoleted: 5.4)
-    @objc public static func logFailure(_ message: String, file: String, function: String, line: Int) {
-        logger.error(message, file, function, line: line)
-        #if DEBUG
-        assertionFailure(message)
-        #endif
-    }
-    
-    // MARK: - Private
-    
-    fileprivate static func configureLogger(_ logger: SwiftyBeaver.Type, withConfiguration configuration: MXLogConfiguration) {
-        if let subLogName = configuration.subLogName {
-            MXLogger.setSubLogName(subLogName)
-        }
-        
-        MXLogger.redirectNSLog(toFiles: configuration.redirectLogsToFiles,
-                               numberOfFiles: configuration.maxLogFilesCount,
-                               sizeLimit: configuration.logFilesSizeLimit)
-        
-        guard configuration.logLevel != .none else {
-            return
-        }
-        
-        let consoleDestination = ConsoleDestination()
-        consoleDestination.useNSLog = true
-        consoleDestination.asynchronously = false
-        consoleDestination.format = "$C $M"
-        consoleDestination.levelColor.verbose = ""
-        consoleDestination.levelColor.debug = ""
-        consoleDestination.levelColor.info = ""
-        consoleDestination.levelColor.warning = "⚠️"
-        consoleDestination.levelColor.error = "🚨"
-        
-        switch configuration.logLevel {
-            case .verbose:
-                consoleDestination.minLevel = .verbose
-            case .debug:
-                consoleDestination.minLevel = .debug
-            case .info:
-                consoleDestination.minLevel = .info
-            case .warning:
-                consoleDestination.minLevel = .warning
-            case .error:
-                consoleDestination.minLevel = .error
-            case .none:
-                break
-        }
-        
-        logger.removeAllDestinations()
-        logger.addDestination(consoleDestination)
     }
 }

@@ -5,8 +5,6 @@ abstract_target 'MatrixSDK' do
     pod 'AFNetworking', '~> 4.0.0'
     pod 'GZIP', '~> 1.3.0'
 
-    pod 'SwiftyBeaver', '1.9.5'
-    
     pod 'OLMKit', '~> 3.2.5', :inhibit_warnings => true
     #pod 'OLMKit', :path => '../olm/OLMKit.podspec'
     
