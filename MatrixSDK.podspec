@@ -36,8 +36,6 @@ Pod::Spec.new do |s|
       ss.dependency 'AFNetworking', '~> 4.0.0'
       ss.dependency 'GZIP', '~> 1.3.0'
 
-      ss.dependency 'SwiftyBeaver', '1.9.5'
-
       # Requirements for e2e encryption
       ss.dependency 'OLMKit', '~> 3.2.4'
       ss.dependency 'Realm', '10.7.6'
