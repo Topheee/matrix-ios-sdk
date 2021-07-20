@@ -1097,7 +1097,7 @@ NSString *const MXRealmCryptoStoreReadonlySuffix = @"readonly";
         storedSession = [[MXOlmOutboundGroupSession alloc] initWithSession:session roomId:roomId creationTime:realmSession.creationTime];
     }];
     
-    MXLogDebug(@"[MXRealmCryptoStore] storeOutboundGroupSession: store 1 key (%lu new) in %.3fms", newCount, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+    MXLogDebug(@"[MXRealmCryptoStore] storeOutboundGroupSession: store 1 key (%lu new) in %.3fms", (unsigned long)newCount, [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
     
     return storedSession;
 }
@@ -1140,7 +1140,7 @@ NSString *const MXRealmCryptoStoreReadonlySuffix = @"readonly";
         [sessions addObject:session];
     }
     
-    MXLogDebug(@"[MXRealmCryptoStore] outboundGroupSessions: found %lu entries", sessions.count);
+    MXLogDebug(@"[MXRealmCryptoStore] outboundGroupSessions: found %lu entries", (unsigned long)sessions.count);
     return sessions;
 }
 
@@ -1151,7 +1151,7 @@ NSString *const MXRealmCryptoStoreReadonlySuffix = @"readonly";
         RLMResults<MXRealmOlmOutboundGroupSession *> *realmSessions = [MXRealmOlmOutboundGroupSession objectsInRealm:realm where:@"roomId = %@", roomId];
         
         [realm deleteObjects:realmSessions];
-        MXLogDebug(@"[MXRealmCryptoStore] removeOutboundGroupSessionWithRoomId%@: removed %lu entries", roomId, realmSessions.count);
+        MXLogDebug(@"[MXRealmCryptoStore] removeOutboundGroupSessionWithRoomId%@: removed %lu entries", roomId, (unsigned long)realmSessions.count);
     }];
 }
 
