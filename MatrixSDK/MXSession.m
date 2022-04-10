@@ -2071,11 +2071,13 @@ typedef void (^MXOnResumeDone)(void);
     {
         //  if no cached data, do not make back and forth with the session state
         MXLogDebug(@"[MXSession] handleBackgroundSyncCacheIfRequired: no cached data, in state: %@", [MXTools readableSessionState:_state]);
+/*
         if (completion)
         {
             completion();
         }
         return;
+*/
     }
     
     //  keep the old state to revert later
