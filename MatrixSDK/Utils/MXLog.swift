@@ -57,28 +57,34 @@ class Logger {
 		verbose(String(describing: something), file, function, line: line, context: context)
 	}
 	func debug(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
-		verbose("DEBUG: \(message)", file, function, line: line, context: context)
+		verbose("[DBG] \(message)", file, function, line: line, context: context)
 	}
 	func debug(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
-		verbose("DEBUG: \(String(describing: something))", file, function, line: line, context: context)
+		verbose("[DBG] \(String(describing: something))", file, function, line: line, context: context)
 	}
 	func info(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
-		verbose("DEBUG: \(message)", file, function, line: line, context: context)
+		verbose("[INF] \(message)", file, function, line: line, context: context)
 	}
 	func info(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
-		verbose("DEBUG: \(String(describing: something))", file, function, line: line, context: context)
+		verbose("[INF] \(String(describing: something))", file, function, line: line, context: context)
 	}
 	func warning(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
-		verbose("DEBUG: \(message)", file, function, line: line, context: context)
+		verbose("[WRN] \(message)", file, function, line: line, context: context)
 	}
 	func warning(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
-		verbose("DEBUG: \(String(describing: something))", file, function, line: line, context: context)
+		verbose("[WRN] \(String(describing: something))", file, function, line: line, context: context)
 	}
 	func error(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
-		verbose("DEBUG: \(message)", file, function, line: line, context: context)
+		verbose("[ERR] \(message)", file, function, line: line, context: context)
 	}
 	func error(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
-		verbose("DEBUG: \(String(describing: something))", file, function, line: line, context: context)
+		verbose("[ERR] \(String(describing: something))", file, function, line: line, context: context)
+	}
+	func failure(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("[FAI] \(message)", file, function, line: line, context: context)
+	}
+	func failure(_ something: Any, _ file: String, _ function: String, line: Int, context: Any? = nil) {
+		verbose("[FAI] \(String(describing: something))", file, function, line: line, context: context)
 	}
 }
 
@@ -147,5 +153,10 @@ private let logger = Logger()
     @available(swift, obsoleted: 5.4)
     @objc public static func logError(_ message: String, file: String, function: String, line: Int) {
         logger.error(message, file, function, line: line)
+    }
+
+    @available(swift, obsoleted: 5.4)
+    @objc public static func logFailure(_ message: String, file: String, function: String, line: Int) {
+        logger.failure(message, file, function, line: line)
     }
 }
