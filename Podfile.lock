@@ -37,7 +37,6 @@ PODS:
   - Realm (10.16.0):
     - Realm/Headers (= 10.16.0)
   - Realm/Headers (10.16.0)
-  - SwiftyBeaver (1.9.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 4.0.0)
@@ -64,6 +63,6 @@ SPEC CHECKSUMS:
   OLMKit: 9fb4799c4a044dd2c06bda31ec31a12191ad30b5
   Realm: b6027801398f3743fc222f096faa85281b506e6c
 
-PODFILE CHECKSUM: ea9778919e01b860c6b9fae81f500df82de7ad60
+PODFILE CHECKSUM: 5e69d9282d2fa9af37a598bcff86beb7801322b8
 
 COCOAPODS: 1.11.2
