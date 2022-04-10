@@ -2156,7 +2156,8 @@ typedef void (^MXOnResumeDone)(void);
         else
         {
             //  trigger delete all data here, just to clean up resources
-            [syncResponseStore deleteData];
+            //[syncResponseStore deleteData];
+            MXLogDebug(@"[MXSession] would have deleted sync response data");
 
             if (completion)
             {

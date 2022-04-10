@@ -163,6 +163,7 @@ public class MXSyncResponseFileStore: NSObject {
             do {
                 let data = try PropertyListEncoder().encode(metadata)
                 try data.write(to: self.metadataFilePath)
+                MXLog.debug("[MXSyncResponseFileStore] saveMetaData: Saved metadata")
             } catch let error {
                 MXLog.debug("[MXSyncResponseFileStore] saveMetaData: Failed to store. Error: \(error)")
             }
