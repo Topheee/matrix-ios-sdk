@@ -38,7 +38,6 @@ PODS:
   - Realm (10.27.0):
     - Realm/Headers (= 10.27.0)
   - Realm/Headers (10.27.0)
-  - SwiftyBeaver (1.9.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 4.0.0)
