@@ -843,7 +843,7 @@ typedef void (^MXOnResumeDone)(void);
         } failure:^(NSError *error) {
             MXStrongifyAndReturnIfNil(self);
 
-            MXLogDebug(@"[MXSession] startWithSyncFilter: WARNING: Impossible to create the filter. Use no filter in /sync");
+            MXLogDebug(@"[MXSession] startWithSyncFilter: WARNING: Impossible to create the filter (%@). Use no filter in /sync", error);
             [self startWithSyncFilterId:nil onServerSyncDone:onServerSyncDone failure:failure];
         }];
     }
