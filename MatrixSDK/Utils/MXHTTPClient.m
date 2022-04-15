@@ -183,7 +183,7 @@ static NSUInteger requestCount = 0;
                               success:(void (^)(NSDictionary *JSONResponse))success
                               failure:(void (^)(NSError *error))failure
 {
-    return [self requestWithMethod:httpMethod path:path parameters:parameters needsAuthentication: needsAuthentication data:nil headers:nil timeout:timeoutInSeconds uploadProgress:nil success:success failure:failure];
+    return [self requestWithMethod:httpMethod path:path parameters:parameters needsAuthentication: needsAuthentication data:nil headers:@{@"Content-Type" : @"application/json"} timeout:timeoutInSeconds uploadProgress:nil success:success failure:failure];
 }
 
 - (MXHTTPOperation*)requestWithMethod:(NSString *)httpMethod
