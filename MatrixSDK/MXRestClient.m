@@ -1132,7 +1132,9 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
     NSString *path = [NSString stringWithFormat:@"%@/user/%@/filter", apiPathPrefix, credentials.userId];
 
     MXWeakify(self);
-    return [httpClient requestWithMethod:@"POST"
+    NSSet<NSString*> *contentTypes = httpClient.acceptableContentTypes;
+    httpClient.acceptableContentTypes = [NSSet setWithObject: @"application/json"];
+    MXHTTPOperation* op = [httpClient requestWithMethod:@"POST"
                                     path:path
                               parameters:filter.JSONDictionary
                                  success:^(NSDictionary *JSONResponse) {
@@ -1152,6 +1154,8 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
                                      MXStrongifyAndReturnIfNil(self);
                                      [self dispatchFailure:error inBlock:failure];
                                  }];
+    httpClient.acceptableContentTypes = contentTypes;
+    return op;
 }
 
 - (MXHTTPOperation*)getFilterWithFilterId:(NSString*)filterId
@@ -3308,7 +3312,9 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
     NSString *path = [NSString stringWithFormat:@"%@/profile/%@/displayname", apiPathPrefix, credentials.userId];
 
     MXWeakify(self);
-    return [httpClient requestWithMethod:@"PUT"
+    NSSet<NSString*> *contentTypes = httpClient.acceptableContentTypes;
+    httpClient.acceptableContentTypes = [NSSet setWithObject: @"application/json"];
+    MXHTTPOperation* op = [httpClient requestWithMethod:@"PUT"
                                     path:path
                               parameters:@{
                                            @"displayname": displayname
@@ -3321,6 +3327,8 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
                                      MXStrongifyAndReturnIfNil(self);
                                      [self dispatchFailure:error inBlock:failure];
                                  }];
+    httpClient.acceptableContentTypes = contentTypes;
+    return op;
 }
 
 - (MXHTTPOperation*)displayNameForUser:(NSString*)userId
@@ -3337,7 +3345,9 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
                       [MXTools encodeURIComponent:userId]];
 
     MXWeakify(self);
-    return [httpClient requestWithMethod:@"GET"
+    NSSet<NSString*> *contentTypes = httpClient.acceptableContentTypes;
+    httpClient.acceptableContentTypes = [NSSet setWithObject: @"application/json"];
+    MXHTTPOperation* op = [httpClient requestWithMethod:@"GET"
                                     path:path
                               parameters:nil
                                  success:^(NSDictionary *JSONResponse) {
@@ -3358,6 +3368,8 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
                                      MXStrongifyAndReturnIfNil(self);
                                      [self dispatchFailure:error inBlock:failure];
                                  }];
+    httpClient.acceptableContentTypes = contentTypes;
+    return op;
 }
 
 - (MXHTTPOperation*)setAvatarUrl:(NSString*)avatarUrl
@@ -4164,7 +4176,9 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
                           failure:(void (^)(NSError *error))failure
 {
     MXWeakify(self);
-    return [httpClient requestWithMethod:@"GET"
+    NSSet<NSString*> *contentTypes = httpClient.acceptableContentTypes;
+    httpClient.acceptableContentTypes = [NSSet setWithObject: @"application/json"];
+    MXHTTPOperation* op = [httpClient requestWithMethod:@"GET"
                                     path:[NSString stringWithFormat:@"%@/config", contentPathPrefix]
                               parameters:nil
                                  success:^(NSDictionary *JSONResponse) {
@@ -4184,6 +4198,8 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
                                      MXStrongifyAndReturnIfNil(self);
                                      [self dispatchFailure:error inBlock:failure];
                                  }];
+    httpClient.acceptableContentTypes = contentTypes;
+    return op;
 }
 
 - (MXHTTPOperation *)previewForURL:(NSURL *)url
