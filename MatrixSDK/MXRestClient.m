@@ -236,7 +236,8 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
                     return NO;
                 }
             }];
-            
+
+            httpClient.acceptableContentTypes = [NSSet setWithObject: @"application/json"];
             httpClient.tokenValidationResponseHandler = ^BOOL(NSError *error) {
                 if (![MXError isMXError:error])
                 {
