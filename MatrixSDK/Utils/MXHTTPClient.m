@@ -162,7 +162,7 @@ static NSUInteger requestCount = 0;
                               success:(void (^)(NSDictionary *JSONResponse))success
                               failure:(void (^)(NSError *error))failure
 {
-    return [self requestWithMethod:httpMethod path:path parameters:parameters needsAuthentication: self.isAuthenticatedClient data:nil headers:@{@"Content-Type" : @"application/json"} timeout:timeoutInSeconds uploadProgress:nil success:success failure:failure];
+    return [self requestWithMethod:httpMethod path:path parameters:parameters needsAuthentication: self.isAuthenticatedClient data:nil headers:nil timeout:timeoutInSeconds uploadProgress:nil success:success failure:failure];
 }
 
 - (MXHTTPOperation*)requestWithMethod:(NSString *)httpMethod
@@ -183,7 +183,7 @@ static NSUInteger requestCount = 0;
                               success:(void (^)(NSDictionary *JSONResponse))success
                               failure:(void (^)(NSError *error))failure
 {
-    return [self requestWithMethod:httpMethod path:path parameters:parameters needsAuthentication: needsAuthentication data:nil headers:@{@"Content-Type" : @"application/json"} timeout:timeoutInSeconds uploadProgress:nil success:success failure:failure];
+    return [self requestWithMethod:httpMethod path:path parameters:parameters needsAuthentication: needsAuthentication data:nil headers:nil timeout:timeoutInSeconds uploadProgress:nil success:success failure:failure];
 }
 
 - (MXHTTPOperation*)requestWithMethod:(NSString *)httpMethod
@@ -323,6 +323,8 @@ static NSUInteger requestCount = 0;
         {
             [request setValue:[headers valueForKey:key] forHTTPHeaderField:key];
         }
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     }
 
     // If a timeout is specified, set it
