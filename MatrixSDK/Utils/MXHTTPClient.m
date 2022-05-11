@@ -323,8 +323,6 @@ static NSUInteger requestCount = 0;
         {
             [request setValue:[headers valueForKey:key] forHTTPHeaderField:key];
         }
-        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     }
 
     // If a timeout is specified, set it

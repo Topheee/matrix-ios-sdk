@@ -831,7 +831,7 @@ typedef void (^MXOnResumeDone)(void);
         } failure:^(NSError *error) {
             MXStrongifyAndReturnIfNil(self);
 
-            MXLogDebug(@"[MXSession] startWithSyncFilter: WARNING: Impossible to create the filter (%@). Use no filter in /sync", error);
+            MXLogDebug(@"[MXSession] startWithSyncFilter: WARNING: Impossible to create the filter. Use no filter in /sync");
             [self startWithSyncFilterId:nil onServerSyncDone:onServerSyncDone failure:failure];
         }];
     }
@@ -1993,13 +1993,11 @@ typedef void (^MXOnResumeDone)(void);
     {
         //  if no cached data, do not make back and forth with the session state
         MXLogDebug(@"[MXSession] handleBackgroundSyncCacheIfRequired: no cached data, in state: %@", [MXTools readableSessionState:_state]);
-/*
         if (completion)
         {
             completion();
         }
         return;
-*/
     }
     
     //  keep the old state to revert later
@@ -2080,8 +2078,7 @@ typedef void (^MXOnResumeDone)(void);
         else
         {
             //  trigger delete all data here, just to clean up resources
-            //[syncResponseStore deleteData];
-            MXLogDebug(@"[MXSession] would have deleted sync response data");
+            [syncResponseStore deleteData];
 
             if (completion)
             {
