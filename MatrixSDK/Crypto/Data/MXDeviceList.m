@@ -112,7 +112,6 @@
         {
             // already a key download in progress/queued for this user; its results
             // will be good enough for us.
-            [usersToDownload addObject:userId];
         }
         else if (forceDownload
                     || (trackingStatus != MXDeviceTrackingStatusUpToDate && trackingStatus != MXDeviceTrackingStatusUnreachableServer))
