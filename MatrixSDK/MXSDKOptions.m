@@ -64,6 +64,7 @@ static MXSDKOptions *sharedOnceInstance = nil;
         _enableGroupSessionCache = arc4random_uniform(2) == 1;
 
         _enableSymmetricBackup = NO;
+        _enableSpaceGraph = YES;
     }
     
     return self;
