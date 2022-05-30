@@ -236,12 +236,17 @@ typedef void (^MXOnResumeDone)(void);
         publicisedGroupsByUserId = [[NSMutableDictionary alloc] init];
         nativeToVirtualRoomIds = [NSMutableDictionary dictionary];
         asyncTaskQueue = [[MXAsyncTaskQueue alloc] initWithDispatchQueue:dispatch_get_main_queue() label:@"MXAsyncTaskQueue-MXSession"];
-        _spaceService = [[MXSpaceService alloc] initWithSession:self];
-        //  add did build graph notification
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(spaceServiceDidBuildSpaceGraph:)
-                                                     name:MXSpaceService.didBuildSpaceGraph
-                                                   object:_spaceService];
+        if (MXSDKOptions.sharedInstance.enableSpaceGraph)
+        {
+            _spaceService = [[MXSpaceService alloc] initWithSession:self];
+            //  add did build graph notification
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(spaceServiceDidBuildSpaceGraph:)
+                                                         name:MXSpaceService.didBuildSpaceGraph
+                                                       object:_spaceService];
+        } else {
+            _spaceService = nil
+        }
         _threadingService = [[MXThreadingService alloc] initWithSession:self];
         _eventStreamService = [[MXEventStreamService alloc] init];
         _preferredSyncPresence = MXPresenceOnline;

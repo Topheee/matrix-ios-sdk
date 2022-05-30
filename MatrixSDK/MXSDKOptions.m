@@ -54,6 +54,7 @@ static MXSDKOptions *sharedOnceInstance = nil;
         _authEnableRefreshTokens = NO;
         _enableThreads = NO;
         _enableRoomSharedHistoryOnInvite = NO;
+        _enableSpaceGraph = YES;
     }
     
     return self;

@@ -204,6 +204,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic) BOOL enableRoomSharedHistoryOnInvite;
 
+/**
+ Enable building up a space graph..
+
+ @remark YES by default.
+ */
+@property (nonatomic) BOOL enableSpaceGraph;
+
 @end
 
 NS_ASSUME_NONNULL_END
