@@ -253,7 +253,7 @@ typedef void (^MXOnResumeDone)(void);
                                                          name:MXSpaceService.didBuildSpaceGraph
                                                        object:_spaceService];
         } else {
-            _spaceService = nil
+            _spaceService = nil;
         }
         _threadingService = [[MXThreadingService alloc] initWithSession:self];
         _eventStreamService = [[MXEventStreamService alloc] init];
