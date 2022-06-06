@@ -3822,6 +3822,8 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
                            success:(void (^)(MXSyncResponse *syncResponse))success
                            failure:(void (^)(NSError *error))failure
 {
+    MXLogDebug(@"[MXRestClient] syncFromToken: %@, serverTimeout: %lu, clientTimeout: %lu, setPresence: %@, filter: %@", token, serverTimeout, clientTimeout, setPresence, filterId);
+
     // Fill the url parameters (CAUTION: boolean value must be true or false string)
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
