@@ -44,7 +44,7 @@ import Foundation
     case error
 }
 
-class Logger {
+private class PlainLogger {
 	func verbose(_ message: String, _ file: String, _ function: String, line: Int, context: Any? = nil) {
 		if let theContext = context {
 			NSLog("\(theContext) \(file) \(line) \(function) \(message)")
@@ -87,7 +87,7 @@ class Logger {
 	}
 }
 
-private let logger = Logger()
+private let logger = PlainLogger()
 
 /**
  Logging utility that provies multiple logging levels as well as file output and rolling.

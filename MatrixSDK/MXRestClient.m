@@ -3958,23 +3958,7 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
         {
             __block MXSyncResponse *syncResponse;
             [self dispatchProcessing:^{
-                
-                MXTaskProfile *initialSyncParsingTaskProfile;
-                if (!token)
-                {
-                    initialSyncParsingTaskProfile = [profiler startMeasuringTaskWithName:MXTaskProfileNameInitialSyncParsing];
-                }
-                
                 MXJSONModelSetMXJSONModel(syncResponse, MXSyncResponse, JSONResponse);
-                
-                if (initialSyncParsingTaskProfile)
-                {
-                    // Contextualise the profiling with the amount of received information
-                    initialSyncParsingTaskProfile.units = syncResponse.rooms.join.count;
-                    
-                    [profiler stopMeasuringTaskWithProfile:initialSyncParsingTaskProfile];
-                }
-                
             } andCompletion:^{
                 success(syncResponse);
             }];

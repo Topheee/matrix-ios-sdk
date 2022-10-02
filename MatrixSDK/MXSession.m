@@ -258,8 +258,7 @@ typedef void (^MXOnResumeDone)(void);
         _threadingService = [[MXThreadingService alloc] initWithSession:self];
         _eventStreamService = [[MXEventStreamService alloc] init];
         _preferredSyncPresence = MXPresenceOnline;
-        _locationService = [[MXLocationService alloc] initWithSession:self];
-        
+
         [self setIdentityServer:mxRestClient.identityServer andAccessToken:mxRestClient.credentials.identityServerAccessToken];
         
         firstSyncDone = NO;
@@ -1404,8 +1403,6 @@ typedef void (^MXOnResumeDone)(void);
 {
     dispatch_group_t initialSyncDispatchGroup = dispatch_group_create();
     
-    __block MXTaskProfile *syncTaskProfile;
-    __block StopDurationTracking stopDurationTracking;
     __block MXSyncResponse *syncResponse;
     __block BOOL useLiveResponse = YES;
 
@@ -1435,14 +1432,11 @@ typedef void (^MXOnResumeDone)(void);
         if (!self->firstSyncDone)
         {
             BOOL isInitialSync = !self.isEventStreamInitialised;
-            MXTaskProfileName taskName = isInitialSync ? MXTaskProfileNameStartupInitialSync : MXTaskProfileNameStartupIncrementalSync;
-            syncTaskProfile = [MXSDKOptions.sharedInstance.profiler startMeasuringTaskWithName:taskName];
             if (isInitialSync) {
                 // Temporarily tracking performance both by `MXSDKOptions.sharedInstance.profiler` (manually measuring time)
                 // and `MXSDKOptions.sharedInstance.analyticsDelegate` (delegating to performance monitoring tool).
                 // This ambiguity will be resolved in the future
                 NSString *operation = MXSDKOptions.sharedInstance.enableGroupSessionCache ? @"initialSync.enableGroupSessionCache" : @"initialSync.diableGroupSessionCache";
-                stopDurationTracking = [MXSDKOptions.sharedInstance.analyticsDelegate startDurationTrackingForName:@"MXSession" operation:operation];
             }
         }
         
@@ -1477,18 +1471,10 @@ typedef void (^MXOnResumeDone)(void);
     
     dispatch_group_notify(initialSyncDispatchGroup, dispatch_get_main_queue(), ^{
         BOOL wasFirstSync = NO;
-        if (!self->firstSyncDone && syncTaskProfile)
+        if (!self->firstSyncDone)
         {
             wasFirstSync = YES;
             self->firstSyncDone = YES;
-            
-            // Contextualise the profiling with the amount of received information
-            syncTaskProfile.units = syncResponse.rooms.join.count;
-            
-            [MXSDKOptions.sharedInstance.profiler stopMeasuringTaskWithProfile:syncTaskProfile];
-            if (stopDurationTracking) {
-                stopDurationTracking();
-            }
         }
         
         BOOL isInitialSync = !self.isEventStreamInitialised;
@@ -2266,7 +2252,6 @@ typedef void (^MXOnResumeDone)(void);
             // The first /sync response for this room may have happened before the
             // homeserver answer to the createRoom request.
             success(room);
-            [MXSDKOptions.sharedInstance.analyticsDelegate trackCreatedRoomAsDM:NO];
         }
         else
         {
@@ -2283,7 +2268,6 @@ typedef void (^MXOnResumeDone)(void);
                     
                     success(room);
                     [[NSNotificationCenter defaultCenter] removeObserver:initialSyncObserver];
-                    [MXSDKOptions.sharedInstance.analyticsDelegate trackCreatedRoomAsDM:NO];
                 }
             }];
         }
@@ -2334,7 +2318,6 @@ typedef void (^MXOnResumeDone)(void);
         
         // Tag the room as direct
         tagRoomAsDirectChat(room);
-        [MXSDKOptions.sharedInstance.analyticsDelegate trackCreatedRoomAsDM:YES];
     }
     else
     {
@@ -2354,7 +2337,6 @@ typedef void (^MXOnResumeDone)(void);
                 tagRoomAsDirectChat(room);
                 
                 [[NSNotificationCenter defaultCenter] removeObserver:initialSyncObserver];
-                [MXSDKOptions.sharedInstance.analyticsDelegate trackCreatedRoomAsDM:YES];
             }
         }];
     }
@@ -2452,9 +2434,6 @@ typedef void (^MXOnResumeDone)(void);
             // homeserver answer to the joinRoom request.
             success(room);
             BOOL isSpace = room.summary.roomType == MXRoomTypeSpace;
-            [MXSDKOptions.sharedInstance.analyticsDelegate trackJoinedRoomAsDM:room.summary.isDirect
-                                                                       isSpace:isSpace
-                                                                   memberCount:room.summary.membersCount.joined];
         }
         else
         {
@@ -2469,9 +2448,6 @@ typedef void (^MXOnResumeDone)(void);
                     success(room);
                     [[NSNotificationCenter defaultCenter] removeObserver:initialSyncObserver];
                     BOOL isSpace = room.summary.roomType == MXRoomTypeSpace;
-                    [MXSDKOptions.sharedInstance.analyticsDelegate trackJoinedRoomAsDM:room.summary.isDirect
-                                                                               isSpace:isSpace
-                                                                           memberCount:room.summary.membersCount.joined];
                 }
             }];
         }

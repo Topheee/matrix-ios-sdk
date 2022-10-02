@@ -582,7 +582,6 @@ NSInteger const kMXInboundGroupSessionCacheSize = 100;
     
     BOOL enableCache = MXSDKOptions.sharedInstance.enableGroupSessionCache;
     NSString *operation = enableCache ? @"megolm.decrypt.cache" : @"megolm.decrypt.store";
-    StopDurationTracking stopTracking = [MXSDKOptions.sharedInstance.analyticsDelegate startDurationTrackingForName:@"MXOlmDevice" operation:operation];
     
     if (enableCache)
     {
@@ -600,10 +599,6 @@ NSInteger const kMXInboundGroupSessionCacheSize = 100;
     else
     {
         [store performSessionOperationWithGroupSessionWithId:sessionId senderKey:senderKey block:block];
-    }
-    if (stopTracking)
-    {
-        stopTracking();
     }
 }
 
