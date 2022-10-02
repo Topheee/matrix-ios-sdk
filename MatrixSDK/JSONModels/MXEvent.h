@@ -23,7 +23,6 @@
 
 @class MXEventDecryptionResult;
 @class MXEncryptedContentFile;
-@class MXEventContentLocation;
 
 MX_ASSUME_MISSING_NULLABILITY_BEGIN
 
@@ -516,11 +515,6 @@ extern NSString *const kMXEventIdentifierKey;
  In case of sending failure (MXEventSentStateFailed), the error that occured.
  */
 @property (nonatomic) NSError *sentError;
-
-/**
- Location information if any
- */
-@property (nonatomic, readonly, nullable) MXEventContentLocation *location;
 
 /**
  Indicates if the event hosts state data.

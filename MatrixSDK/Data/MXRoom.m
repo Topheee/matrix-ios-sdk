@@ -2448,8 +2448,7 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
                                            kMXMessageTypeImage,
                                            kMXMessageTypeVideo,
                                            kMXMessageTypeAudio,
-                                           kMXMessageTypeFile,
-                                           kMXMessageTypeLocation
+                                           kMXMessageTypeFile
                                            ];
         
         canReplyToEvent = [supportedMessageTypes containsObject:messageType];
@@ -2562,40 +2561,6 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
     [content setObject:newContent.JSONDictionary forKey:kMXMessageContentKeyNewContent];
     
     return [self sendEventOfType:[MXTools eventTypeString:MXEventTypePollStart] content:content threadId:pollStartEvent.threadId localEcho:localEcho success:success failure:failure];
-}
-
-#pragma mark - Location sharing
-
-- (MXHTTPOperation *)sendLocationWithLatitude:(double)latitude
-                                    longitude:(double)longitude
-                                  description:(NSString *)description
-                                     threadId:(NSString*)threadId
-                                    localEcho:(MXEvent **)localEcho
-                                    assetType:(MXEventAssetType)assetType
-                                      success:(void (^)(NSString *))success
-                                      failure:(void (^)(NSError *))failure
-{
-    MXEventContentLocation *locationContent = [[MXEventContentLocation alloc] initWithAssetType:assetType
-                                                                                       latitude:latitude
-                                                                                      longitude:longitude
-                                                                                    description:description];
-    
-    NSMutableDictionary *content = [NSMutableDictionary dictionary];
-
-    [content addEntriesFromDictionary:locationContent.JSONDictionary];
-    
-    NSString *fallbackText = [NSString stringWithFormat:@"Location was shared at %@ as of %@", locationContent.geoURI, NSDate.date];
-    content[kMXMessageBodyKey] = fallbackText;
-    content[kMXMessageContentKeyExtensibleTextMSC1767] = fallbackText;
-    
-    NSInteger timestamp = NSDate.date.timeIntervalSince1970 * 1000; // milliseconds since UNIX epoch
-    content[kMXMessageContentKeyExtensibleTimestampMSC3488] = @(timestamp);
-    
-    return [self sendMessageWithContent:content
-                               threadId:threadId
-                              localEcho:localEcho
-                                success:success
-                                failure:failure];
 }
 
 #pragma mark - Message order preserving

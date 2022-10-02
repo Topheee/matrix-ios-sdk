@@ -112,7 +112,6 @@ FOUNDATION_EXPORT NSString *MatrixSDKVersion;
 #import "MXEventReplace.h"
 #import "MXInReplyTo.h"
 #import "MXEventRelationThread.h"
-#import "MXEventContentLocation.h"
 
 #import "MXReplyEventParser.h"
 
@@ -192,7 +191,5 @@ FOUNDATION_EXPORT NSString *MatrixSDKVersion;
 #import "MXInvitedGroupSync.h"
 #import "MXGroupSyncProfile.h"
 #import "MXDehydrationService.h"
-#import "MXBeaconInfo.h"
-#import "MXBeacon.h"
 #import "MXEventAssetType.h"
 
