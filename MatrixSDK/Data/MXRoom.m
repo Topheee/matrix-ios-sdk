@@ -37,7 +37,6 @@
 #import "MXRoomSync.h"
 
 #import "MXEventContentPollStart.h"
-#import "MXEventContentLocation.h"
 #import "MatrixSDKSwiftHeader.h"
 #import "NSDictionary+MutableDeepCopy.h"
 
@@ -861,12 +860,6 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
         }
     }
     return [mxSession.matrixRestClient sendEventToRoom:self.roomId threadId:threadId eventType:eventTypeString content:newContent txnId:txnId success:^(NSString *eventId) {
-
-        //  track event composed
-        [MXSDKOptions.sharedInstance.analyticsDelegate trackComposerEventInThread:inThread
-                                                                        isEditing:isEditing
-                                                                          isReply:isReply
-                                                                     startsThread:startsThread];
 
         if (success)
         {
@@ -2178,10 +2171,6 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
     else if (eventToReply.eventType == MXEventTypeBeaconInfo)
     {
         senderMessageBody = stringLocalizer.senderSentTheirLiveLocation;
-    }
-    else if (eventToReply.location)
-    {
-        senderMessageBody = stringLocalizer.senderSentTheirLocation;
     }
     else if (eventToReply.eventType == MXEventTypeBeaconInfo)
     {

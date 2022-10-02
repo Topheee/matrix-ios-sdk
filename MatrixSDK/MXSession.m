@@ -372,7 +372,6 @@ typedef void (^MXOnResumeDone)(void);
     self.roomListDataManager = [[MXSDKOptions.sharedInstance.roomListDataManagerClass alloc] init];
 
     NSDate *startDate = [NSDate date];
-    MXTaskProfile *taskProfile = [MXSDKOptions.sharedInstance.profiler startMeasuringTaskWithName:MXTaskProfileNameStartupMountData];
 
     MXWeakify(self);
     [self.store openWithCredentials:matrixRestClient.credentials onComplete:^{
@@ -437,7 +436,6 @@ typedef void (^MXOnResumeDone)(void);
 
                 dispatch_group_t dispatchGroupRooms = dispatch_group_create();
                 NSUInteger numberOfSummaries = self.store.roomSummaryStore.countOfRooms;
-                taskProfile.units = numberOfSummaries;
                 NSArray<NSString *> *roomIDs = self.store.roomIds;
                 BOOL fixSummariesLastMessages = NO;
                 if (numberOfSummaries < roomIDs.count)
@@ -489,10 +487,6 @@ typedef void (^MXOnResumeDone)(void);
                                                                                  force:YES
                                                                             completion:nil];
                     }
-
-                    taskProfile.units = self->rooms.count;
-                    [MXSDKOptions.sharedInstance.profiler stopMeasuringTaskWithProfile:taskProfile];
-                    MXLogDebug(@"[MXSession] Total time to mount SDK data from MXStore: %.0fms", taskProfile.duration * 1000);
 
                     [self setState:MXSessionStateStoreDataReady];
 
