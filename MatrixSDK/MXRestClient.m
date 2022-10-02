@@ -3947,32 +3947,12 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
         clientTimeoutInSeconds = clientTimeoutInSeconds / 1000;
     }
     
-    id<MXProfiler> profiler = MXSDKOptions.sharedInstance.profiler;
-    MXTaskProfile *initialSyncRequestTaskProfile;
-    if (!token)
-    {
-        initialSyncRequestTaskProfile = [profiler startMeasuringTaskWithName:MXTaskProfileNameInitialSyncRequest];
-    }
-    
     MXWeakify(self);
     MXHTTPOperation *operation = [httpClient requestWithMethod:@"GET"
                                                           path:[NSString stringWithFormat:@"%@/sync", apiPathPrefix]
                                                     parameters:parameters timeout:clientTimeoutInSeconds
                                                        success:^(NSDictionary *JSONResponse) {
         MXStrongifyAndReturnIfNil(self);
-        
-        if (initialSyncRequestTaskProfile)
-        {
-            // Guess the amout of data
-            NSDictionary *rooms, *join, *invite, *leave;
-            MXJSONModelSetDictionary(rooms, JSONResponse[@"rooms"]);
-            MXJSONModelSetDictionary(join, rooms[@"join"]);
-            MXJSONModelSetDictionary(invite, rooms[@"invite"]);
-            MXJSONModelSetDictionary(leave, rooms[@"leave"]);
-            initialSyncRequestTaskProfile.units = join.count;
-            
-            [profiler stopMeasuringTaskWithProfile:initialSyncRequestTaskProfile];
-        }
         
         if (success)
         {
@@ -4001,11 +3981,6 @@ andUnauthenticatedHandler: (MXRestClientUnauthenticatedHandler)unauthenticatedHa
         }
     } failure:^(NSError *error) {
         MXStrongifyAndReturnIfNil(self);
-        
-        if (initialSyncRequestTaskProfile)
-        {
-            [profiler cancelTaskProfile:initialSyncRequestTaskProfile];
-        }
         
         [self dispatchFailure:error inBlock:failure];
     }];

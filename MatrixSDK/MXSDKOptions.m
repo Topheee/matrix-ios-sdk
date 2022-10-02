@@ -18,7 +18,6 @@
 
 #import "MXSDKOptions.h"
 
-#import "MXBaseProfiler.h"
 #import "MatrixSDKSwiftHeader.h"
 
 static MXSDKOptions *sharedOnceInstance = nil;
@@ -39,7 +38,6 @@ static MXSDKOptions *sharedOnceInstance = nil;
     self = [super init];
     if (self)
     {
-        _profiler = [MXBaseProfiler new];
         _disableIdenticonUseForUserAvatar = NO;
         _enableCryptoWhenStartingMXSession = NO;
         _enableKeyBackupWhenStartingMXCrypto = YES;
