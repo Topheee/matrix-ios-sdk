@@ -19,9 +19,6 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
-#import "MXAnalyticsDelegate.h"
-#import "MXProfiler.h"
-
 /**
  Call transfer types. `MXCallTransferTypeLocal` is created for future, not used right now.
  */
@@ -90,20 +87,6 @@ NS_ASSUME_NONNULL_BEGIN
  NO by default.
  */
 @property (nonatomic) BOOL handleCallAssertedIdentityEvents;
-
-/**
- The delegate object to receive analytics events
- 
- By default, nil.
- */
-@property (nonatomic, nullable) id<MXAnalyticsDelegate> analyticsDelegate;
-
-/**
- The profiler.
- 
- By default, MXBaseProfiler.
- */
-@property (nonatomic, nullable) id<MXProfiler> profiler;
 
 /**
  The version of the media cache at the application level.
@@ -229,6 +212,12 @@ NS_ASSUME_NONNULL_BEGIN
  @remark NO by default
  */
 @property (nonatomic) BOOL enableNewClientInformationFeature;
+/**
+ Enable building up a space graph..
+
+ @remark YES by default.
+ */
+@property (nonatomic) BOOL enableSpaceGraph;
 
 @end
 
