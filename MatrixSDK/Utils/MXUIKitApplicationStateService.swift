@@ -66,9 +66,12 @@ public class MXUIKitApplicationStateService: NSObject {
         applicationState = .inactive
         super.init()
         
-        applicationState = self.sharedApplicationState
+        // The service must be created on the main tread
+        DispatchQueue.main.async {
+            self.applicationState = self.sharedApplicationState
 
-        registerApplicationStateChangeNotifications()
+            self.registerApplicationStateChangeNotifications()
+        }
     }
     
     

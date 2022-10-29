@@ -570,18 +570,6 @@ NSInteger const kMXInboundGroupSessionCacheSize = 100;
 - (void)performGroupSessionOperationWithSessionId:(NSString*)sessionId senderKey:(NSString*)senderKey block:(void (^)(MXOlmInboundGroupSession *inboundGroupSession))block
 {
     @synchronized (self.inboundGroupSessionCache)
-    // Based on a feature flag megolm decryption will either fetch a group session from the store on every decryption,
-    // or (if the flag is enabled) it will use LRU cache to avoid refetching unchanged sessions.
-    //
-    // Additionally the duration of each variant is tracked in analytics (if configured and enabled by the user)
-    // to allow performance comparison
-    //
-    // LRU cache variant will eventually become the default implementation if proved stable.
-    
-    BOOL enableCache = MXSDKOptions.sharedInstance.enableGroupSessionCache;
-    NSString *operation = enableCache ? @"megolm.decrypt.cache" : @"megolm.decrypt.store";
-    
-    if (enableCache)
     {
         MXOlmInboundGroupSession *session = (MXOlmInboundGroupSession *)[self.inboundGroupSessionCache get:sessionId];
         if (!session)
