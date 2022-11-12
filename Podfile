@@ -1,16 +1,15 @@
 # Uncomment this line to define a global platform for your project
 
+### DEACTIVATED TO RE-ENABLE SWIFT PACKAGE BUILD ###
 # Expose Objective-C frameworks to Swift
 # Build and link dependencies as static frameworks
-use_frameworks! :linkage => :static
+#use_frameworks! :linkage => :static
 
 abstract_target 'MatrixSDK' do
     
     pod 'AFNetworking', '~> 4.0.0'
     pod 'GZIP', '~> 1.3.0'
 
-    pod 'SwiftyBeaver', '1.9.5'
-    
     pod 'OLMKit', '~> 3.2.5', :inhibit_warnings => true
     #pod 'OLMKit', :path => '../olm/OLMKit.podspec'
     

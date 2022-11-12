@@ -15,7 +15,7 @@
 //
 
 import Foundation
-import OLMKit
+//import OLMKit
 
 public class MXMemoryCryptoStore: NSObject, MXCryptoStore {
 

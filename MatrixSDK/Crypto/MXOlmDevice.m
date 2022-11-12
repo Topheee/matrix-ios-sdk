@@ -569,7 +569,6 @@ NSInteger const kMXInboundGroupSessionCacheSize = 100;
 
 - (void)performGroupSessionOperationWithSessionId:(NSString*)sessionId senderKey:(NSString*)senderKey block:(void (^)(MXOlmInboundGroupSession *inboundGroupSession))block
 {
-    StopDurationTracking stopTracking = [MXSDKOptions.sharedInstance.analyticsDelegate startDurationTrackingForName:@"MXOlmDevice" operation:@"megolm.decrypt.cache"];
     @synchronized (self.inboundGroupSessionCache)
     {
         MXOlmInboundGroupSession *session = (MXOlmInboundGroupSession *)[self.inboundGroupSessionCache get:sessionId];
@@ -579,10 +578,6 @@ NSInteger const kMXInboundGroupSessionCacheSize = 100;
             [self.inboundGroupSessionCache put:sessionId object:session];
         }
         block(session);
-    }
-    if (stopTracking)
-    {
-        stopTracking();
     }
 }
 

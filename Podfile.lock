@@ -38,7 +38,6 @@ PODS:
   - Realm (10.27.0):
     - Realm/Headers (= 10.27.0)
   - Realm/Headers (10.27.0)
-  - SwiftyBeaver (1.9.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 4.0.0)
@@ -48,7 +47,6 @@ DEPENDENCIES:
   - OHHTTPStubs (~> 9.1.0)
   - OLMKit (~> 3.2.5)
   - Realm (= 10.27.0)
-  - SwiftyBeaver (= 1.9.5)
 
 SPEC REPOS:
   trunk:
@@ -59,7 +57,6 @@ SPEC REPOS:
     - OHHTTPStubs
     - OLMKit
     - Realm
-    - SwiftyBeaver
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
@@ -69,8 +66,7 @@ SPEC CHECKSUMS:
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   OLMKit: da115f16582e47626616874e20f7bb92222c7a51
   Realm: 9ca328bd7e700cc19703799785e37f77d1a130f2
-  SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
 
 PODFILE CHECKSUM: 7805b1fe65269b6ac6667a7f347f324e8970c050
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
