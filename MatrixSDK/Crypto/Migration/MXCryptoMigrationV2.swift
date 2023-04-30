@@ -15,7 +15,7 @@
 //
 
 import Foundation
-import OLMKit
+@_implementationOnly import OLMKit
 @_implementationOnly import MatrixSDKCrypto
 
 class MXCryptoMigrationV2: NSObject {
