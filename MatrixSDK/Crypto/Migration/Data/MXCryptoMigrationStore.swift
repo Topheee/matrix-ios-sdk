@@ -16,7 +16,7 @@
 
 import Foundation
 import OLMKit
-import MatrixSDKCrypto
+@_implementationOnly import MatrixSDKCrypto
 
 struct MXCryptoMigrationStore {
     struct GlobalSettings {
