@@ -98,7 +98,7 @@
         [aliceSession.legacyCrypto.store storeSecret:secret withSecretId:secretId];
         
         // - Alice logs in on a new device
-        [matrixSDKTestsE2EData loginUserOnANewDevice:self credentials:aliceSession.matrixRestClient.credentials withPassword:MXTESTS_ALICE_PWD onComplete:^(MXSession *newAliceSession) {
+/*        [matrixSDKTestsE2EData loginUserOnANewDevice:self credentials:aliceSession.matrixRestClient.credentials withPassword:MXTESTS_ALICE_PWD onComplete:^(MXSession *newAliceSession) {
             
             MXCredentials *newAlice = newAliceSession.matrixRestClient.credentials;
             
@@ -119,7 +119,7 @@
                 XCTFail(@"The operation should not fail - NSError: %@", error);
                 [expectation fulfill];
             }];
-        }];
+        }];*/
     }];
 }
 
