@@ -17,12 +17,7 @@
 import Foundation
 @testable import MatrixSDK
 
-/* This test is deactivated, since it won't compile using `@_implementationOnly` imports, and that is because `@testable import` does not work together with `@_implementationOnly`.
- * In detail: MXAnalyticsDestination is `internal`-scoped. But it exposes a type from SwiftyBeaver (`SwiftyBeaver.Level`).
- * This is fine for regular imports of MatrixSDK (since MXAnalyticsDestination is `internal` it is not visible for the importer), but `@testable import` makes `internal` visibility equal to `public` visibility (in a sense).
- * However, since SwiftyBeaver is imported as `@_implementationOnly` in MXAnalyticsDestination.swift, this `SwiftyBeaver.Level` type is not available in the public interface of the MatrixSDK module.
- * And here comes the contradiction: after `@testable import MatrixSDK`, MXAnalyticsDestination becomes public, its `minLevel` `SwiftyBeaver.Level`-typed property becomes also public, but the origin of that type, the SwiftyBeaver module, was never exposed.
- * This is currently one of the known limitations of `@_implementationOnly`: https://forums.swift.org/t/update-on-implementation-only-imports/26996/29
+
 class MXAnalyticsDestinationUnitTests: XCTestCase {
     enum Error: Swift.Error {
         case sampleError
@@ -127,4 +122,3 @@ class MXAnalyticsDestinationUnitTests: XCTestCase {
         XCTAssertEqual(delegate.spyDetails as? NSDictionary, ["context": "1"])
     }
 }
- */
