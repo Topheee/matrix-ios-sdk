@@ -22,7 +22,6 @@
 #import "MXEncryptedContentFile.h"
 #import "MXEventRelations.h"
 #import "MXEventReferenceChunk.h"
-#import "MXEventContentLocation.h"
 
 #warning File has not been annotated with nullability, see MX_ASSUME_MISSING_NULLABILITY_BEGIN
 
@@ -543,11 +542,6 @@ NSString *const kMXEventUnthreaded = @"unthreaded";
     return [msgtype isEqualToString:kMXMessageTypeAudio] && (self.content[kMXMessageContentKeyVoiceMessage] ||
                                                              self.content[kMXMessageContentKeyVoiceMessageMSC2516] ||
                                                              self.content[kMXMessageContentKeyVoiceMessageMSC3245]);
-}
-
-- (MXEventContentLocation *)location
-{
-    return [MXEventContentLocation modelFromJSON:self.content];
 }
 
 - (BOOL)contentHasBeenEdited

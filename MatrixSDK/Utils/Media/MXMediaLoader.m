@@ -46,6 +46,8 @@ NSString *const kMXMediaUploadIdPrefix = @"upload-";
     if (self = [super init])
     {
         _state = MXMediaLoaderStateIdle;
+		NSURLSessionConfiguration *configuration = NSURLSessionConfiguration.defaultSessionConfiguration;
+		downloadSession = [NSURLSession sessionWithConfiguration:configuration];
     }
     return self;
 }
@@ -62,7 +64,7 @@ NSString *const kMXMediaUploadIdPrefix = @"upload-";
 - (void)cancel
 {
     // Cancel potential connection
-    if (downloadConnection)
+    if (downloadTask)
     {
         MXLogDebug(@"[MXMediaLoader] Media download has been cancelled (%@)", self.downloadMediaURL);
         if (onError){
@@ -72,8 +74,8 @@ NSString *const kMXMediaUploadIdPrefix = @"upload-";
         // Reset blocks
         onSuccess = nil;
         onError = nil;
-        [downloadConnection cancel];
-        downloadConnection = nil;
+        [downloadTask cancel];
+		downloadTask = nil;
         downloadData = nil;
     }
     else
@@ -146,21 +148,19 @@ NSString *const kMXMediaUploadIdPrefix = @"upload-";
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         request.HTTPBody = [NSJSONSerialization dataWithJSONObject:data options:0 error:nil];
     }
-    
-    // if we use the default settings the connection object will be scheduled in the NSDefaultRunLoopMode. That means that the connection is only executing the request when the app’s run loop is in NSDefaultRunLoopMode.
-    // Now, when a user touches the screen (e.g. to scroll a UIScrollView) the run loop’s mode will be switched to NSEventTrackingRunLoopMode. And now, that the run loop is not in NSDefaultRunMode anymore, the connection will not execute. The ugly effect of that is, that the download is blocked whenever the user touches the screen
-    // Setting the mode to NSRunLoopCommonModes allow the request to work in all modes (even NSEventTrackingRunLoopMode)
-    downloadConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-    [downloadConnection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-    [downloadConnection start];
+	downloadTask = [downloadSession dataTaskWithRequest:request];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+- (void)URLSession:(NSURLSession *)session
+		  dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
 {
     expectedSize = response.expectedContentLength;
+	completionHandler(NSURLSessionResponseAllow);
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+- (void)connection:(NSURLSessionDataTask *)connection didFailWithError:(NSError *)error
 {
     MXLogDebug(@"[MXMediaLoader] Failed to download media (%@): %@", self.downloadMediaURL, error);
     // send the latest known download info
@@ -173,12 +173,14 @@ NSString *const kMXMediaUploadIdPrefix = @"upload-";
     }
     
     downloadData = nil;
-    downloadConnection = nil;
+    downloadTask = nil;
     
     self.state = MXMediaLoaderStateDownloadFailed;
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+- (void)URLSession:(NSURLSession *)session
+		  dataTask:(NSURLSessionDataTask *)dataTask
+	didReceiveData:(NSData *)data
 {
     // Append data
     [downloadData appendData:data];
@@ -268,12 +270,15 @@ NSString *const kMXMediaUploadIdPrefix = @"upload-";
     }
     
     downloadData = nil;
-    downloadConnection = nil;
+    downloadTask = nil;
 }
 
 #pragma mark - NSURLConnectionDelegate
 
-- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+// TODO this method doesn't work! we need to implement it - specifically, we need to call the callback
+- (void)URLSession:(NSURLSession *)session
+didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
 {
     NSURLProtectionSpace *protectionSpace = [challenge protectionSpace];
     if ([protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
@@ -315,11 +320,11 @@ NSString *const kMXMediaUploadIdPrefix = @"upload-";
         if (SecTrustEvaluate(serverTrust, &secresult) != errSecSuccess)
         {
             // Trust evaluation failed
-            [connection cancel];
+            [downloadTask cancel];
 
             // Generate same kind of error as AFNetworking
             NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:kCFURLErrorCancelled userInfo:nil];
-            [self connection:connection didFailWithError:error];
+            [self connection:downloadTask didFailWithError:error];
         }
         else
         {
@@ -349,11 +354,11 @@ NSString *const kMXMediaUploadIdPrefix = @"upload-";
                     else
                     {
                         MXLogDebug(@"[MXMediaLoader] Certificate check failed for %@", protectionSpace);
-                        [connection cancel];
+                        [downloadTask cancel];
 
                         // Generate same kind of error as AFNetworking
                         NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:kCFURLErrorCancelled userInfo:nil];
-                        [self connection:connection didFailWithError:error];
+                        [self connection:downloadTask didFailWithError:error];
                     }
                     break;
                 }

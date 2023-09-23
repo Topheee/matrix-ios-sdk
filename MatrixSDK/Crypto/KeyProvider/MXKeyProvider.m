@@ -74,7 +74,7 @@ static MXKeyProvider *sharedInstance = nil;
 
     if (keyData && keyData.type != keyType)
     {
-        [NSException raise:@"KeyType" format:@"Wrong key type (%lu expected %lu) for data of type : %@", keyData.type, keyType, dataType];
+		[NSException raise:@"KeyType" format:@"Wrong key type (%lu expected %lu) for data of type : %@", (unsigned long)keyData.type, (unsigned long)keyType, dataType];
     }
 
     return keyData;

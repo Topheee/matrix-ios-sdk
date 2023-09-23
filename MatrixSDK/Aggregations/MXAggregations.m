@@ -40,9 +40,6 @@
 @property (nonatomic) MXAggregatedReferencesUpdater *aggregatedReferencesUpdater;
 @property (nonatomic) MXAggregatedPollsUpdater *aggregatedPollsUpdater;
 
-@property (nonatomic, strong, readwrite) MXBeaconAggregations *beaconAggregations;
-@property (nonatomic, strong) id<MXBeaconInfoSummaryStoreProtocol> beaconInfoSummaryStore;
-
 @end
 
 
@@ -89,10 +86,6 @@
     else if ([listener isKindOfClass:[MXEventEditsListener class]])
     {
         [self.aggregatedEditsUpdater removeListener:listener];
-    }
-    else if ([listener isKindOfClass:[MXBeaconInfoSummaryPerRoomListener class]] || [listener isKindOfClass:[MXBeaconInfoSummaryAllRoomListener class]])
-    {
-        [self.beaconAggregations removeListener:listener];
     }
 }
 
@@ -231,7 +224,6 @@
 {
     MXLogDebug(@"[MXAggregations] Reset data")
     [self.store deleteAll];
-    [self.beaconInfoSummaryStore deleteAllBeaconInfoSummaries];
 }
 
 
@@ -254,12 +246,6 @@
         self.aggregatedPollsUpdater = [[MXAggregatedPollsUpdater alloc] initWithSession:self.mxSession
                                                                                   store:self.mxSession.store];
         
-        id<MXBeaconInfoSummaryStoreProtocol> beaconInfoSummaryStore = [[MXBeaconInfoSummaryRealmStore alloc] initWithSession:self.mxSession];
-        
-        self.beaconInfoSummaryStore = beaconInfoSummaryStore;
-        
-        self.beaconAggregations = [[MXBeaconAggregations alloc] initWithSession:self.mxSession store:beaconInfoSummaryStore];
-
         [self registerListener];
     }
     
@@ -278,7 +264,6 @@
 - (void)resetDataInRoom:(NSString *)roomId
 {
     [self.aggregatedReactionsUpdater resetDataInRoom:roomId];
-    [self.beaconAggregations clearDataInRoomWithId:roomId];
 }
 
 
@@ -306,17 +291,6 @@
                     [self.aggregatedReactionsUpdater handleRedaction:event];
                 }
                 break;
-            case MXEventTypeBeaconInfo:
-                [self.beaconAggregations handleBeaconInfoWithEvent:event];
-                break;
-            case MXEventTypeBeacon:
-                if (direction == MXTimelineDirectionForwards)
-                {
-                    [self.beaconAggregations handleBeaconWithEvent:event];
-                }
-                break;
-            case MXEventTypePollEnd:
-                [self.aggregatedPollsUpdater refreshPollAfter:event];
             default:
                 break;
         }

@@ -23,7 +23,6 @@
 #import "MXRoom.h"
 #import "MXSession.h"
 #import "MXRoomNameDefaultStringLocalizer.h"
-#import "MXBeaconInfo.h"
 
 #import "NSArray+MatrixSDK.h"
 
@@ -146,8 +145,6 @@
     BOOL hasRoomMembersChange = NO;
     BOOL updated = NO;
     
-    NSMutableSet<NSString*>* userIdsSharingLiveBeacon = [summary.userIdsSharingLiveBeacon mutableCopy] ?: [NSMutableSet new] ;
-    
     for (MXEvent *event in stateEvents)
     {
         switch (event.eventType)
@@ -243,11 +240,6 @@
                 break;
             }
 
-            case MXEventTypeBeaconInfo:
-            {
-                [self updateUserIdsSharingLiveBeacon:userIdsSharingLiveBeacon withStateEvent:event];
-                break;
-            }
             case MXEventTypeRoomHistoryVisibility:
                 summary.historyVisibility = roomState.historyVisibility;
                 break;
@@ -256,12 +248,6 @@
         }
     }
     
-    if (![userIdsSharingLiveBeacon isEqualToSet:summary.userIdsSharingLiveBeacon])
-    {
-        summary.userIdsSharingLiveBeacon = userIdsSharingLiveBeacon;
-        updated = YES;
-    }
-
     if (hasRoomMembersChange)
     {
         // Check if there was a change on room state cached data
@@ -841,43 +827,6 @@
     
     // Only accept membership join or invite for given user id
     return [self isMembershipEventJoinOrInvite:event forUserId:userId]; 
-}
-
-#pragma mark Beacon info
-
-- (BOOL)updateUserIdsSharingLiveBeacon:(NSMutableSet<NSString*>*)userIdsSharingLiveBeacon withStateEvent:(MXEvent*)stateEvent
-{
-    MXBeaconInfo *beaconInfo = [[MXBeaconInfo alloc] initWithMXEvent:stateEvent];
-    
-    NSString *userId = beaconInfo.userId;
-    
-    if (!beaconInfo || !userId)
-    {
-        return NO;
-    }
-        
-    BOOL updated = NO;
-    
-    BOOL isUserExist = [userIdsSharingLiveBeacon containsObject:userId];
-    
-    if (beaconInfo.isLive)
-    {
-        if (!isUserExist)
-        {
-            [userIdsSharingLiveBeacon addObject:userId];
-            updated = YES;
-        }
-    }
-    else
-    {
-        if (isUserExist)
-        {
-            [userIdsSharingLiveBeacon removeObject:userId];
-            updated = YES;
-        }
-    }
-    
-    return updated;
 }
 
 @end

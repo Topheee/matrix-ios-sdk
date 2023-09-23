@@ -270,7 +270,6 @@ static NSUInteger const kMXRoomSummaryTrustComputationDelayMs = 1000;
     _dataTypes = summary.dataTypes;
     _sentStatus = summary.sentStatus;
     _parentSpaceIds = summary.parentSpaceIds;
-    _userIdsSharingLiveBeacon = summary.userIdsSharingLiveBeacon;
     
     if (!_others)
     {
@@ -998,7 +997,6 @@ static NSUInteger const kMXRoomSummaryTrustComputationDelayMs = 1000;
         _sentStatus = (MXRoomSummarySentStatus)[aDecoder decodeIntegerForKey:@"sentStatus"];
         _favoriteTagOrder = [aDecoder decodeObjectForKey:@"favoriteTagOrder"];
         _parentSpaceIds = [aDecoder decodeObjectForKey:@"parentSpaceIds"];
-        _userIdsSharingLiveBeacon = [aDecoder decodeObjectForKey:@"userIdsSharingLiveBeacon"];
         
         // Compute the trust if asked to do it automatically
         // or maintain its computation it has been already calcutated
@@ -1054,7 +1052,6 @@ static NSUInteger const kMXRoomSummaryTrustComputationDelayMs = 1000;
     [aCoder encodeInteger:_sentStatus forKey:@"sentStatus"];
     [aCoder encodeObject:_favoriteTagOrder forKey:@"favoriteTagOrder"];
     [aCoder encodeObject:_parentSpaceIds forKey:@"parentSpaceIds"];
-    [aCoder encodeObject:_userIdsSharingLiveBeacon forKey:@"userIdsSharingLiveBeacon"];
 }
 
 - (NSString *)description

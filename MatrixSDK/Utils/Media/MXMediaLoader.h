@@ -107,7 +107,7 @@ extern NSString *const kMXMediaUploadIdPrefix;
 /**
  `MXMediaLoader` defines a class to download/upload media. It provides progress information during the operation.
  */
-@interface MXMediaLoader : NSObject <NSURLConnectionDataDelegate, NSURLConnectionDelegate>
+@interface MXMediaLoader : NSObject <NSURLSessionDataDelegate, NSURLSessionDelegate>
 {    
     blockMXMediaLoader_onSuccess onSuccess;
     blockMXMediaLoader_onError onError;
@@ -115,7 +115,8 @@ extern NSString *const kMXMediaUploadIdPrefix;
     // Media download
     long long expectedSize;
     NSMutableData *downloadData;
-    NSURLConnection *downloadConnection;
+    NSURLSessionDataTask *downloadTask;
+    NSURLSession *downloadSession;
     
     // Media upload
     MXSession* mxSession;

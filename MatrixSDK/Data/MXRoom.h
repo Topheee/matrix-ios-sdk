@@ -39,7 +39,6 @@
 #import "MXCall.h"
 #import "MXEventTimeline.h"
 #import "MXEventsEnumerator.h"
-#import "MXEventContentLocation.h"
 #import "MXCryptoConstants.h"
 #import "MXSendReplyEventStringLocalizerProtocol.h"
 
@@ -1073,17 +1072,6 @@ FOUNDATION_EXPORT NSInteger const kMXRoomInvalidInviteSenderErrorCode;
                                   localEcho:(MXEvent **)localEcho
                                     success:(void (^)(NSString *))success
                                     failure:(void (^)(NSError *))failure;
-
-#pragma mark - Location sharing
-
-- (MXHTTPOperation *)sendLocationWithLatitude:(double)latitude
-                                    longitude:(double)longitude
-                                  description:(NSString *)description
-                                     threadId:(NSString*)threadId
-                                    localEcho:(MXEvent **)localEcho
-                                    assetType:(MXEventAssetType)assetType
-                                      success:(void (^)(NSString *))success
-                                      failure:(void (^)(NSError *))failure;
 
 #pragma mark - Events listeners on the live timeline
 /**

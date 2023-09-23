@@ -239,8 +239,6 @@ static NSUInteger preloadOptions;
             // If metaData is still defined, we can load rooms data
             if (self->metaData)
             {                
-                MXTaskProfile *taskProfile = [MXSDKOptions.sharedInstance.profiler startMeasuringTaskWithName:MXTaskProfileNameStartupStorePreload];
-                
                 MXLogDebug(@"[MXFileStore] Start data loading from files");
 
                 if (preloadOptions & MXFileStorePreloadOptionRoomMessages)
@@ -262,9 +260,7 @@ static NSUInteger preloadOptions;
                 [self loadUsers];
                 [self loadGroups];
                 [self loadUnreadRooms];
-                taskProfile.units = self.roomSummaryStore.countOfRooms;
-                [MXSDKOptions.sharedInstance.profiler stopMeasuringTaskWithProfile:taskProfile];
-                MXLogDebug(@"[MXFileStore] Data loaded from files in %.0fms", taskProfile.duration * 1000);
+                MXLogDebug(@"[MXFileStore] Data loaded from files");
             }
 
             // Else, if credentials is valid, create and store it

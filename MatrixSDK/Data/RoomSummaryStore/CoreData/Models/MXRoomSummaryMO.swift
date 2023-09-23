@@ -65,7 +65,6 @@ public class MXRoomSummaryMO: NSManagedObject {
     @NSManaged public var s_membersCount: MXRoomMembersCountMO?
     @NSManaged public var s_trust: MXUsersTrustLevelSummaryMO?
     @NSManaged public var s_lastMessage: MXRoomLastMessageMO?
-    @NSManaged public var s_userIdsSharingLiveBeacon: String?
     
     @discardableResult
     internal static func insert(roomSummary summary: MXRoomSummaryProtocol,
@@ -152,8 +151,6 @@ public class MXRoomSummaryMO: NSManagedObject {
             }
             s_lastMessage = nil
         }
-                
-        s_userIdsSharingLiveBeacon = Array(summary.userIdsSharingLiveBeacon).joined(separator: StringArrayDelimiter)
     }
     
     private func normalizeHash(_ hash: UInt) -> Int64 {
@@ -319,12 +316,5 @@ extension MXRoomSummaryMO: MXRoomSummaryProtocol {
             return MXUsersTrustLevelSummary(managedObject: s_trust)
         }
         return nil
-    }
-    
-    public var userIdsSharingLiveBeacon: Set<String> {
-        guard let userIds = s_userIdsSharingLiveBeacon?.components(separatedBy: StringArrayDelimiter) else {
-            return []
-        }
-        return Set<String>(userIds)
     }
 }
