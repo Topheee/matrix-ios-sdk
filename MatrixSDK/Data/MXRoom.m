@@ -81,11 +81,6 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
      FIFO queue of failure blocks waiting for [self members:].
      */
     NSMutableArray<void (^)(NSError *)> *pendingMembersFailureBlocks;
-    
-    /**
-     The manager for sharing keys of messages with invited users
-     */
-    MXSharedHistoryKeyManager *sharedHistoryKeyManager;
 }
 @end
 
@@ -122,14 +117,6 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
     {
         _roomId = roomId;
         mxSession = mxSession2;
-        
-        if ([mxSession.crypto isKindOfClass:[MXLegacyCrypto class]])
-        {
-            MXMegolmDecryption *decryption = [[MXMegolmDecryption alloc] initWithCrypto:mxSession.crypto];
-            sharedHistoryKeyManager = [[MXSharedHistoryKeyManager alloc] initWithRoomId:roomId
-                                                                                 crypto:mxSession.crypto
-                                                                                service:decryption];
-        }
 
         if (store)
         {
@@ -1026,7 +1013,7 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
         kMXMessageBodyKey: filename,
         @"url": fakeMediaURI,
         @"info": [@{
-            @"mimetype": mimetype,
+            @"mimetype": (mimetype ?: @"application/octet-stream"),
             @"w": @(imageSize.width),
             @"h": @(imageSize.height),
             @"size": @(imageData.length)
@@ -1353,7 +1340,7 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
             }
 
             // update metadata with result of converter output
-            msgContent[@"info"][@"mimetype"] = mimetype;
+            msgContent[@"info"][@"mimetype"] = (mimetype ?: @"application/octet-stream");
             msgContent[@"info"][@"w"] = @(size.width);
             msgContent[@"info"][@"h"] = @(size.height);
             msgContent[@"info"][@"duration"] = @((int)floor(durationInMs));
@@ -1676,7 +1663,7 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
         kMXMessageBodyKey: filename,
         @"url": fakeMediaURI,
         @"info": @{
-                @"mimetype": mimeType,
+                @"mimetype": (mimeType ?: @"application/octet-stream"),
                 @"size": @(fileData.length)
         },
         kMXMessageContentKeyExtensibleTextMSC1767: filename,
@@ -1684,7 +1671,7 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
                 kMXMessageContentKeyExtensibleFileSize: @(fileData.length),
                 kMXMessageContentKeyExtensibleFileName: filename,
                 kMXMessageContentKeyExtensibleFileURL: fakeMediaURI,
-                kMXMessageContentKeyExtensibleFileMimeType: mimeType
+                kMXMessageContentKeyExtensibleFileMimeType: (mimeType ?: @"application/octet-stream")
         }.mutableCopy}.mutableCopy;
     
     if(additionalTypes.count)
@@ -1970,22 +1957,7 @@ NSInteger const kMXRoomInvalidInviteSenderErrorCode = 9002;
                        success:(void (^)(void))success
                        failure:(void (^)(NSError *error))failure
 {
-    if (MXSDKOptions.sharedInstance.enableRoomSharedHistoryOnInvite)
-    {
-        [self shareRoomKeysWith:userId];
-    }
     return [mxSession.matrixRestClient inviteUser:userId toRoom:self.roomId success:success failure:failure];
-}
-
-- (void)shareRoomKeysWith:(NSString *)userId
-{
-    // The value of 20 is arbitrary and imprecise, we merely want to ensure that when a user is invited to a room
-    // they are able to read any immediately preciding messages that may be relevant to the invite.
-    NSInteger numberOfSharedMessage = 20;
-    id<MXEventsEnumerator> enumerator = [self enumeratorForStoredMessagesWithTypeIn:@[kMXEventTypeStringRoomMessage]];
-    [sharedHistoryKeyManager shareMessageKeysWithUserId:userId
-                                      messageEnumerator:enumerator
-                                                  limit:numberOfSharedMessage];
 }
 
 - (MXHTTPOperation*)inviteUserByEmail:(NSString*)email

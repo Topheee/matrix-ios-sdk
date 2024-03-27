@@ -156,8 +156,8 @@ NSTimeInterval kMXCryptoMinForceSessionPeriod = 3600.0; // one hour
 	__block id<MXCrypto> crypto;
 
 #ifdef MX_CRYPTO
-	dispatch_queue_t cryptoQueue = [MXLegacyCrypto dispatchQueueForUser:mxSession.matrixRestClient.credentials.userId];
-	dispatch_sync(cryptoQueue, ^{
+    dispatch_queue_t cryptoQueue = [MXLegacyCrypto dispatchQueueForUser:mxSession.matrixRestClient.credentials.userId];
+    dispatch_sync(cryptoQueue, ^{
 
 		MXCryptoStoreClass *cryptoStore = [MXCryptoStoreClass createStoreWithCredentials:mxSession.matrixRestClient.credentials];
 		cryptoStore.cryptoVersion = MXCryptoVersionLast;
@@ -174,7 +174,7 @@ NSTimeInterval kMXCryptoMinForceSessionPeriod = 3600.0; // one hour
 								 complete:(void (^)(id<MXCrypto> crypto, NSError *error))complete
 {
 #ifdef MX_CRYPTO
-	[self initalizeLegacyCryptoWithMatrixSession:mxSession complete:complete];
+    [self initalizeLegacyCryptoWithMatrixSession:mxSession complete:complete];
 #else
 	complete(nil);
 #endif

@@ -101,8 +101,8 @@ class MXCrossSigningV2UnitTests: XCTestCase {
                 userId: "Alice",
                 trustsOurOwnDevice: true,
                 masterKey: "",
-                selfSigningKey: "",
-                userSigningKey: ""
+                userSigningKey: "",
+                selfSigningKey: ""
             )
         ]
         crossSigning.refreshState { _ in
@@ -120,8 +120,8 @@ class MXCrossSigningV2UnitTests: XCTestCase {
                 userId: "Alice",
                 trustsOurOwnDevice: true,
                 masterKey: "",
-                selfSigningKey: "",
-                userSigningKey: ""
+                userSigningKey: "",
+                selfSigningKey: ""
             )
         ]
         crossSigning.refreshState { _ in
@@ -149,8 +149,8 @@ class MXCrossSigningV2UnitTests: XCTestCase {
                     userId: "Alice",
                     trustsOurOwnDevice: true,
                     masterKey: "",
-                    selfSigningKey: "",
-                    userSigningKey: ""
+                    userSigningKey: "",
+                    selfSigningKey: ""
                 )
             ]
             
@@ -210,6 +210,18 @@ private extension MXCrossSigningV2 {
     func crossSignDevice(deviceId: String, userId: String) async throws {
         return try await withCheckedThrowingContinuation { continuation in
             self.crossSignDevice(withDeviceId: deviceId, userId: userId) {
+                continuation.resume()
+            } failure: { error in
+                continuation.resume(throwing: error)
+            }
+        }
+    }
+}
+
+private extension MXCrossSigning {
+    func refreshState() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            refreshState { _ in
                 continuation.resume()
             } failure: { error in
                 continuation.resume(throwing: error)

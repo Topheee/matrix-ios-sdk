@@ -60,6 +60,7 @@ class MXCryptoV2: NSObject, MXCrypto {
     let keyVerificationManager: MXKeyVerificationManager
     let crossSigning: MXCrossSigning
     let recoveryService: MXRecoveryService
+    let dehydrationService: DehydrationService
     
     @MainActor
     init(
@@ -124,14 +125,13 @@ class MXCryptoV2: NSObject, MXCrypto {
         )
         crossSigning = crossSign
         
+        let secretStorage = MXSecretStorage(matrixSession: session, processingQueue: legacyQueue)
+        
         recoveryService = MXRecoveryService(
             dependencies: .init(
                 credentials: restClient.credentials,
                 backup: backup,
-                secretStorage: MXSecretStorage(
-                    matrixSession: session,
-                    processingQueue: legacyQueue
-                ),
+                secretStorage: secretStorage,
                 secretStore: MXCryptoSecretStoreV2(
                     backup: backup,
                     backupEngine: backupEngine,
@@ -142,6 +142,10 @@ class MXCryptoV2: NSObject, MXCrypto {
             ),
             delegate: crossSign
         )
+        
+        dehydrationService = DehydrationService(restClient: restClient,
+                                                secretStorage: secretStorage,
+                                                dehydratedDevices: machine.dehydratedDevices())
         
         log.debug("Initialized Crypto module")
     }
@@ -330,7 +334,8 @@ class MXCryptoV2: NSObject, MXCrypto {
                     toDevice: syncResponse.toDevice,
                     deviceLists: syncResponse.deviceLists,
                     deviceOneTimeKeysCounts: syncResponse.deviceOneTimeKeysCount ?? [:],
-                    unusedFallbackKeys: syncResponse.unusedFallbackKeys
+                    unusedFallbackKeys: syncResponse.unusedFallbackKeys,
+                    nextBatchToken: syncResponse.nextBatch
                 )
                 await handle(toDeviceEvents: toDevice.events)
             } catch {
@@ -382,18 +387,37 @@ class MXCryptoV2: NSObject, MXCrypto {
         case .verified:
             // If we want to set verified status, we will manually verify the device,
             // including uploading relevant signatures
+            try? machine.setLocalTrust(userId: machine.userId, deviceId: deviceId, trust: .verified)
             
-            Task {
-                do {
-                    try await machine.verifyDevice(userId: userId, deviceId: deviceId)
-                    log.debug("Successfully marked device as verified")
-                    await MainActor.run {
-                        success?()
+            if (userId == machine.userId) {
+                if (machine.crossSigningStatus().hasSelfSigning) {
+                    // If we can cross sign, upload a new signature for that device
+                    Task {
+                        do {
+                            try await machine.verifyDevice(userId: userId, deviceId: deviceId)
+                            log.debug("Successfully marked device as verified")
+                            await MainActor.run {
+                                success?()
+                            }
+                        } catch {
+                            log.error("Failed marking device as verified", context: error)
+                            await MainActor.run {
+                                failure?(error)
+                            }
+                        }
                     }
-                } catch {
-                    log.error("Failed marking device as verified", context: error)
-                    await MainActor.run {
-                        failure?(error)
+                } else {
+                    // It's a good time to request secrets
+                    Task {
+                        do {
+                            try await machine.queryMissingSecretsFromOtherSessions()
+                            await MainActor.run {
+                                success?()
+                            }
+                        } catch {
+                            log.error("Failed to query missing secrets", context: error)
+                            failure?(error)
+                        }
                     }
                 }
             }
