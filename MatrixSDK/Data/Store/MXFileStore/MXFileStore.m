@@ -2420,8 +2420,8 @@ static NSUInteger preloadOptions;
 
     NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager]
                                          enumeratorAtURL:[NSURL URLWithString:path]
-                                         includingPropertiesForKeys:nil
-                                         options:0
+                                         includingPropertiesForKeys:@[NSURLIsDirectoryKey]
+                                         options:NSDirectoryEnumerationProducesRelativePathURLs
                                          errorHandler:^(NSURL *url, NSError *error) {
                                              return YES;
                                          }];
@@ -2434,11 +2434,7 @@ static NSUInteger preloadOptions;
         if ([url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil] && ![isDirectory boolValue])
         {
             // Return a file path relative to 'path'
-            NSRange range = [url.absoluteString rangeOfString:path];
-            NSString *relativeFilePath = [url.absoluteString
-                                          substringFromIndex:(range.location + range.length)];
-
-            [files addObject:relativeFilePath];
+            [files addObject:[@"/" stringByAppendingString: url.relativeString]];
         }
     }
     
