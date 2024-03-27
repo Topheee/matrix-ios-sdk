@@ -15,7 +15,6 @@
 		02CAD439217DD12F0074700B /* MXContentScanResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CAD434217DD12F0074700B /* MXContentScanResult.m */; };
 		02CAD43A217DD12F0074700B /* MXContentScanEncryptedBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CAD436217DD12F0074700B /* MXContentScanEncryptedBody.m */; };
 		02CAD43B217DD12F0074700B /* MXContentScanEncryptedBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 02CAD437217DD12F0074700B /* MXContentScanEncryptedBody.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0C90662A1D71E1FAC81AE9B9 /* libPods-MatrixSDK-MatrixSDK-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EB974DFB592986747766BB /* libPods-MatrixSDK-MatrixSDK-macOS.a */; };
 		180F858427A2AF3000F4E5A5 /* MXWellKnownTileServerConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F858227A2AF3000F4E5A5 /* MXWellKnownTileServerConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		180F858527A2AF3000F4E5A5 /* MXWellKnownTileServerConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 180F858227A2AF3000F4E5A5 /* MXWellKnownTileServerConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		180F858627A2AF3000F4E5A5 /* MXWellKnownTileServerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 180F858327A2AF3000F4E5A5 /* MXWellKnownTileServerConfig.m */; };
@@ -690,7 +689,6 @@
 		3AD4F232274B922D003F47FE /* MXRoomAliasAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD4F230274B922C003F47FE /* MXRoomAliasAvailabilityChecker.swift */; };
 		3AF85F9226FC7AE800A9E67B /* MXSpaceNotificationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF85F9126FC7AE800A9E67B /* MXSpaceNotificationState.swift */; };
 		3AF85F9326FC7AE800A9E67B /* MXSpaceNotificationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF85F9126FC7AE800A9E67B /* MXSpaceNotificationState.swift */; };
-		45A464600F0E7F90846883CC /* libPods-MatrixSDKTests-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A13C13901D6F9F486DA5EA /* libPods-MatrixSDKTests-iOS.a */; };
 		66398BA527A4085B00466E89 /* MXRefreshResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 66398BA427A4085B00466E89 /* MXRefreshResponse.m */; };
 		66398BA627A4085B00466E89 /* MXRefreshResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 66398BA427A4085B00466E89 /* MXRefreshResponse.m */; };
 		66836AB727CFA17200515780 /* MXEventStreamService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66836AB527CFA17200515780 /* MXEventStreamService.swift */; };
@@ -703,6 +701,7 @@
 		66AC9D26278CE627002E9B8F /* MXRefreshTokenData.m in Sources */ = {isa = PBXBuildFile; fileRef = 66AC9D22278CE626002E9B8F /* MXRefreshTokenData.m */; };
 		71DE22E01BC7C51200284153 /* MXReceiptData.m in Sources */ = {isa = PBXBuildFile; fileRef = 71DE22DC1BC7C51200284153 /* MXReceiptData.m */; };
 		71DE22E11BC7C51200284153 /* MXReceiptData.h in Headers */ = {isa = PBXBuildFile; fileRef = 71DE22DD1BC7C51200284153 /* MXReceiptData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86AAD2A59CCC0DD326A07033 /* Pods_MatrixSDKTests_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D6B0207532AE1A2CD80448 /* Pods_MatrixSDKTests_iOS.framework */; };
 		8EC511042568216B00EC4E5B /* MXTaggedEventInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EC511022568216B00EC4E5B /* MXTaggedEventInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8EC511052568216B00EC4E5B /* MXTaggedEventInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EC511022568216B00EC4E5B /* MXTaggedEventInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8EC511062568216B00EC4E5B /* MXTaggedEventInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EC511032568216B00EC4E5B /* MXTaggedEventInfo.m */; };
@@ -722,7 +721,9 @@
 		92634B831EF2E3C400DB9F60 /* MXCallKitConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 92634B811EF2E3C400DB9F60 /* MXCallKitConfiguration.m */; };
 		9274AFE81EE580240009BEB6 /* MXCallKitAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9274AFE61EE580240009BEB6 /* MXCallKitAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9274AFE91EE580240009BEB6 /* MXCallKitAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9274AFE71EE580240009BEB6 /* MXCallKitAdapter.m */; };
-		9F40FADC16DC5965A1DF9CBE /* libPods-MatrixSDK-MatrixSDK-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D431D5CB06B98B8AEB4784FB /* libPods-MatrixSDK-MatrixSDK-iOS.a */; };
+		941F9F607FA039A233144DE2 /* Pods_MatrixSDK_MatrixSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F56913C50356A90D1A6D28A5 /* Pods_MatrixSDK_MatrixSDK_iOS.framework */; };
+		9CCE7C35026B92298DB9C43D /* Pods_MatrixSDK_MatrixSDK_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C5E0A1160D7EF314F477352 /* Pods_MatrixSDK_MatrixSDK_macOS.framework */; };
+		A4D46B19EFC861CA1EDAC880 /* Pods_MatrixSDKTests_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D11CF0EFD8711AB2570E65BF /* Pods_MatrixSDKTests_macOS.framework */; };
 		A75CAD692A9796DE00F06072 /* MXWellKnownAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = A75CAD682A9796DE00F06072 /* MXWellKnownAuthentication.m */; };
 		A75CAD6A2A9796DE00F06072 /* MXWellKnownAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = A75CAD682A9796DE00F06072 /* MXWellKnownAuthentication.m */; };
 		A75CAD6C2A979AC500F06072 /* MXWellKnownAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = A75CAD6B2A97970500F06072 /* MXWellKnownAuthentication.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1355,7 +1356,6 @@
 		C6F935891E5B3BE600FC34BF /* MXEventTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F935841E5B3BE600FC34BF /* MXEventTimeline.swift */; };
 		C6F9358A1E5B3BE600FC34BF /* MXEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F935861E5B3BE600FC34BF /* MXEvent.swift */; };
 		C6F9358B1E5B3BE600FC34BF /* MXJSONModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F935871E5B3BE600FC34BF /* MXJSONModels.swift */; };
-		E3576F1500ED9D36EC9D319F /* libPods-MatrixSDKTests-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D2A414A8F1B7AE81BE479B8 /* libPods-MatrixSDKTests-macOS.a */; };
 		EC05473425FF8A3C0047ECD7 /* MXVirtualRoomInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EC05473225FF8A3C0047ECD7 /* MXVirtualRoomInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EC05473525FF8A3C0047ECD7 /* MXVirtualRoomInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = EC05473225FF8A3C0047ECD7 /* MXVirtualRoomInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EC05473625FF8A3C0047ECD7 /* MXVirtualRoomInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EC05473325FF8A3C0047ECD7 /* MXVirtualRoomInfo.m */; };
@@ -1862,8 +1862,6 @@
 		ED6DAC1F28C79D2000ECDCB6 /* MXUnrequestedForwardedRoomKeyManagerUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6DAC1D28C79D2000ECDCB6 /* MXUnrequestedForwardedRoomKeyManagerUnitTests.swift */; };
 		ED6DAC2128C7A51400ECDCB6 /* MXDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6DAC2028C7A4F000ECDCB6 /* MXDateProvider.swift */; };
 		ED6DAC2228C7A51400ECDCB6 /* MXDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6DAC2028C7A4F000ECDCB6 /* MXDateProvider.swift */; };
-		ED6E87A9294B3BAB00100D9C /* MXAnalyticsDestinationUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E87A8294B3BAB00100D9C /* MXAnalyticsDestinationUnitTests.swift */; };
-		ED6E87AA294B3BAB00100D9C /* MXAnalyticsDestinationUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6E87A8294B3BAB00100D9C /* MXAnalyticsDestinationUnitTests.swift */; };
 		ED6F4EFC2987F0FC007D1191 /* MXEncryptedKeyBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6F4EFB2987F0FC007D1191 /* MXEncryptedKeyBackup.swift */; };
 		ED6F4EFD2987F0FC007D1191 /* MXEncryptedKeyBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6F4EFB2987F0FC007D1191 /* MXEncryptedKeyBackup.swift */; };
 		ED7019DD2886C24100FC31B9 /* MXCrossSigningInfoSourceUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F1D242885A39800F897E7 /* MXCrossSigningInfoSourceUnitTests.swift */; };
@@ -1917,6 +1915,8 @@
 		ED997857292E2877006B5248 /* MXSessionStartupProgressUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED997855292E2877006B5248 /* MXSessionStartupProgressUnitTests.swift */; };
 		EDA2CDD628F5C4230088ACE7 /* MXQRCodeTransactionV2UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA2CDD528F5C4230088ACE7 /* MXQRCodeTransactionV2UnitTests.swift */; };
 		EDA2CDD728F5C4230088ACE7 /* MXQRCodeTransactionV2UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA2CDD528F5C4230088ACE7 /* MXQRCodeTransactionV2UnitTests.swift */; };
+		EDA40A0529E9D6BE00C0CAB9 /* MXKeyProviderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA40A0429E9D6BE00C0CAB9 /* MXKeyProviderStub.swift */; };
+		EDA40A0629E9D6BE00C0CAB9 /* MXKeyProviderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA40A0429E9D6BE00C0CAB9 /* MXKeyProviderStub.swift */; };
 		EDA40A0F29E9E2BF00C0CAB9 /* legacy_version2_account.realm in Resources */ = {isa = PBXBuildFile; fileRef = EDA40A0829E9E2BF00C0CAB9 /* legacy_version2_account.realm */; };
 		EDA40A1029E9E2BF00C0CAB9 /* legacy_version2_account.realm in Resources */ = {isa = PBXBuildFile; fileRef = EDA40A0829E9E2BF00C0CAB9 /* legacy_version2_account.realm */; };
 		EDA40A1129E9E2BF00C0CAB9 /* legacy_verified_account.realm in Resources */ = {isa = PBXBuildFile; fileRef = EDA40A0929E9E2BF00C0CAB9 /* legacy_verified_account.realm */; };
@@ -1929,6 +1929,8 @@
 		EDA40A1829E9E2BF00C0CAB9 /* legacy_deprecated1_account.realm in Resources */ = {isa = PBXBuildFile; fileRef = EDA40A0C29E9E2BF00C0CAB9 /* legacy_deprecated1_account.realm */; };
 		EDA40A1929E9E2BF00C0CAB9 /* archived_encrypted_event in Resources */ = {isa = PBXBuildFile; fileRef = EDA40A0D29E9E2BF00C0CAB9 /* archived_encrypted_event */; };
 		EDA40A1A29E9E2BF00C0CAB9 /* archived_encrypted_event in Resources */ = {isa = PBXBuildFile; fileRef = EDA40A0D29E9E2BF00C0CAB9 /* archived_encrypted_event */; };
+		EDA40A1B29E9E2BF00C0CAB9 /* LegacyRealmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA40A0E29E9E2BF00C0CAB9 /* LegacyRealmStore.swift */; };
+		EDA40A1C29E9E2BF00C0CAB9 /* LegacyRealmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA40A0E29E9E2BF00C0CAB9 /* LegacyRealmStore.swift */; };
 		EDA69340290BA92E00223252 /* MXCryptoMachineUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA6933F290BA92E00223252 /* MXCryptoMachineUnitTests.swift */; };
 		EDA69341290BA92E00223252 /* MXCryptoMachineUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA6933F290BA92E00223252 /* MXCryptoMachineUnitTests.swift */; };
 		EDAAC41928E2FCFE00DD89B5 /* MXCryptoSecretStoreV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAAC41828E2FCFE00DD89B5 /* MXCryptoSecretStoreV2.swift */; };
@@ -2065,7 +2067,6 @@
 		02CAD436217DD12F0074700B /* MXContentScanEncryptedBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXContentScanEncryptedBody.m; sourceTree = "<group>"; };
 		02CAD437217DD12F0074700B /* MXContentScanEncryptedBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXContentScanEncryptedBody.h; sourceTree = "<group>"; };
 		07A279C2DC9BE095AB590A6E /* Pods-MatrixSDK-MatrixSDK-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatrixSDK-MatrixSDK-macOS.debug.xcconfig"; path = "Target Support Files/Pods-MatrixSDK-MatrixSDK-macOS/Pods-MatrixSDK-MatrixSDK-macOS.debug.xcconfig"; sourceTree = "<group>"; };
-		14EB974DFB592986747766BB /* libPods-MatrixSDK-MatrixSDK-macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MatrixSDK-MatrixSDK-macOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		180F858227A2AF3000F4E5A5 /* MXWellKnownTileServerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXWellKnownTileServerConfig.h; sourceTree = "<group>"; };
 		180F858327A2AF3000F4E5A5 /* MXWellKnownTileServerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXWellKnownTileServerConfig.m; sourceTree = "<group>"; };
 		18121F73273E6CED00B68ADF /* MXPollBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXPollBuilderTests.swift; sourceTree = "<group>"; };
@@ -2084,7 +2085,6 @@
 		18C26C51273C16C700805154 /* MXEventContentPollStart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXEventContentPollStart.h; sourceTree = "<group>"; };
 		18C26C52273C16C700805154 /* MXEventContentPollStart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXEventContentPollStart.m; sourceTree = "<group>"; };
 		1D18B4F281A93ADB785B4800 /* Pods-MatrixSDKTests-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatrixSDKTests-iOS.release.xcconfig"; path = "Target Support Files/Pods-MatrixSDKTests-iOS/Pods-MatrixSDKTests-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		2D2A414A8F1B7AE81BE479B8 /* libPods-MatrixSDKTests-macOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MatrixSDKTests-macOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8EE909E54EE5334E1FD271 /* Pods-MatrixSDKTests-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatrixSDKTests-macOS.release.xcconfig"; path = "Target Support Files/Pods-MatrixSDKTests-macOS/Pods-MatrixSDKTests-macOS.release.xcconfig"; sourceTree = "<group>"; };
 		3209682F26396385005D64ED /* AllTestsWithSanitizers.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AllTestsWithSanitizers.xctestplan; sourceTree = "<group>"; };
 		3209683026396385005D64ED /* UnitTestsWithSanitizers.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UnitTestsWithSanitizers.xctestplan; sourceTree = "<group>"; };
@@ -2589,13 +2589,13 @@
 		3AD4F230274B922C003F47FE /* MXRoomAliasAvailabilityChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXRoomAliasAvailabilityChecker.swift; sourceTree = "<group>"; };
 		3AF85F9126FC7AE800A9E67B /* MXSpaceNotificationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXSpaceNotificationState.swift; sourceTree = "<group>"; };
 		415A2B7BEAF8D5462A575DAF /* Pods-MatrixSDK-MatrixSDK-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatrixSDK-MatrixSDK-iOS.release.xcconfig"; path = "Target Support Files/Pods-MatrixSDK-MatrixSDK-iOS/Pods-MatrixSDK-MatrixSDK-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		57A13C13901D6F9F486DA5EA /* libPods-MatrixSDKTests-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MatrixSDKTests-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66398BA427A4085B00466E89 /* MXRefreshResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MXRefreshResponse.m; sourceTree = "<group>"; };
 		66398BA727A408C000466E89 /* MXRefreshResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MXRefreshResponse.h; sourceTree = "<group>"; };
 		66836AB527CFA17200515780 /* MXEventStreamService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXEventStreamService.swift; sourceTree = "<group>"; };
 		66836AB627CFA17200515780 /* MXLiveEventListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXLiveEventListener.swift; sourceTree = "<group>"; };
 		66AC9D21278CE626002E9B8F /* MXRefreshTokenData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRefreshTokenData.h; sourceTree = "<group>"; };
 		66AC9D22278CE626002E9B8F /* MXRefreshTokenData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRefreshTokenData.m; sourceTree = "<group>"; };
+		6C5E0A1160D7EF314F477352 /* Pods_MatrixSDK_MatrixSDK_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MatrixSDK_MatrixSDK_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71DE22DC1BC7C51200284153 /* MXReceiptData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXReceiptData.m; sourceTree = "<group>"; };
 		71DE22DD1BC7C51200284153 /* MXReceiptData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXReceiptData.h; sourceTree = "<group>"; };
 		74B6BABAFA35199D61B18B6F /* Pods-MatrixSDKTests-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatrixSDKTests-iOS.debug.xcconfig"; path = "Target Support Files/Pods-MatrixSDKTests-iOS/Pods-MatrixSDKTests-iOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2611,6 +2611,7 @@
 		92634B811EF2E3C400DB9F60 /* MXCallKitConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXCallKitConfiguration.m; sourceTree = "<group>"; };
 		9274AFE61EE580240009BEB6 /* MXCallKitAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXCallKitAdapter.h; sourceTree = "<group>"; };
 		9274AFE71EE580240009BEB6 /* MXCallKitAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXCallKitAdapter.m; sourceTree = "<group>"; };
+		93D6B0207532AE1A2CD80448 /* Pods_MatrixSDKTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MatrixSDKTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B1217E295306F700E704C2 /* MXAggregatedPollsUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAggregatedPollsUpdaterTests.swift; sourceTree = "<group>"; };
 		A75CAD682A9796DE00F06072 /* MXWellKnownAuthentication.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MXWellKnownAuthentication.m; sourceTree = "<group>"; };
 		A75CAD6B2A97970500F06072 /* MXWellKnownAuthentication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MXWellKnownAuthentication.h; sourceTree = "<group>"; };
@@ -2753,7 +2754,7 @@
 		C6F935841E5B3BE600FC34BF /* MXEventTimeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXEventTimeline.swift; sourceTree = "<group>"; };
 		C6F935861E5B3BE600FC34BF /* MXEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXEvent.swift; sourceTree = "<group>"; };
 		C6F935871E5B3BE600FC34BF /* MXJSONModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXJSONModels.swift; sourceTree = "<group>"; };
-		D431D5CB06B98B8AEB4784FB /* libPods-MatrixSDK-MatrixSDK-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MatrixSDK-MatrixSDK-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D11CF0EFD8711AB2570E65BF /* Pods_MatrixSDKTests_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MatrixSDKTests_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E6641895924FF16C6E5767 /* Pods-MatrixSDK-MatrixSDK-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatrixSDK-MatrixSDK-iOS.debug.xcconfig"; path = "Target Support Files/Pods-MatrixSDK-MatrixSDK-iOS/Pods-MatrixSDK-MatrixSDK-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		E4E572A32459F0F8110BBFAC /* Pods-MatrixSDKTests-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatrixSDKTests-macOS.debug.xcconfig"; path = "Target Support Files/Pods-MatrixSDKTests-macOS/Pods-MatrixSDKTests-macOS.debug.xcconfig"; sourceTree = "<group>"; };
 		E5463BF2B60AC232D46943D5 /* Pods-MatrixSDK-MatrixSDK-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatrixSDK-MatrixSDK-macOS.release.xcconfig"; path = "Target Support Files/Pods-MatrixSDK-MatrixSDK-macOS/Pods-MatrixSDK-MatrixSDK-macOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -3030,7 +3031,6 @@
 		ED6DAC1A28C79AA300ECDCB6 /* MXUnrequestedForwardedRoomKeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXUnrequestedForwardedRoomKeyManager.swift; sourceTree = "<group>"; };
 		ED6DAC1D28C79D2000ECDCB6 /* MXUnrequestedForwardedRoomKeyManagerUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXUnrequestedForwardedRoomKeyManagerUnitTests.swift; sourceTree = "<group>"; };
 		ED6DAC2028C7A4F000ECDCB6 /* MXDateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXDateProvider.swift; sourceTree = "<group>"; };
-		ED6E87A8294B3BAB00100D9C /* MXAnalyticsDestinationUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXAnalyticsDestinationUnitTests.swift; sourceTree = "<group>"; };
 		ED6F4EFB2987F0FC007D1191 /* MXEncryptedKeyBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MXEncryptedKeyBackup.swift; sourceTree = "<group>"; };
 		ED7019E42886C32900FC31B9 /* MXSASTransactionV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXSASTransactionV2.swift; sourceTree = "<group>"; };
 		ED7019E72886C33100FC31B9 /* MXKeyVerificationRequestV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MXKeyVerificationRequestV2.swift; sourceTree = "<group>"; };
@@ -3114,6 +3114,7 @@
 		F08B8D5B1E014711006171A8 /* NSData+MatrixSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MatrixSDK.m"; sourceTree = "<group>"; };
 		F0C34CB91C18C80000C36F09 /* MXSDKOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MXSDKOptions.h; sourceTree = "<group>"; };
 		F0C34CBA1C18C93700C36F09 /* MXSDKOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXSDKOptions.m; sourceTree = "<group>"; };
+		F56913C50356A90D1A6D28A5 /* Pods_MatrixSDK_MatrixSDK_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MatrixSDK_MatrixSDK_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3121,7 +3122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F40FADC16DC5965A1DF9CBE /* libPods-MatrixSDK-MatrixSDK-iOS.a in Frameworks */,
+				941F9F607FA039A233144DE2 /* Pods_MatrixSDK_MatrixSDK_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3130,7 +3131,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3226DC3819DEED3B00866530 /* MatrixSDK.framework in Frameworks */,
-				45A464600F0E7F90846883CC /* libPods-MatrixSDKTests-iOS.a in Frameworks */,
+				86AAD2A59CCC0DD326A07033 /* Pods_MatrixSDKTests_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3138,7 +3139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C90662A1D71E1FAC81AE9B9 /* libPods-MatrixSDK-MatrixSDK-macOS.a in Frameworks */,
+				9CCE7C35026B92298DB9C43D /* Pods_MatrixSDK_MatrixSDK_macOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3147,7 +3148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1E09A132397FA950057C069 /* MatrixSDK.framework in Frameworks */,
-				E3576F1500ED9D36EC9D319F /* libPods-MatrixSDKTests-macOS.a in Frameworks */,
+				A4D46B19EFC861CA1EDAC880 /* Pods_MatrixSDKTests_macOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3194,10 +3195,10 @@
 		0A3A436ED42FC8689721A09E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D431D5CB06B98B8AEB4784FB /* libPods-MatrixSDK-MatrixSDK-iOS.a */,
-				14EB974DFB592986747766BB /* libPods-MatrixSDK-MatrixSDK-macOS.a */,
-				57A13C13901D6F9F486DA5EA /* libPods-MatrixSDKTests-iOS.a */,
-				2D2A414A8F1B7AE81BE479B8 /* libPods-MatrixSDKTests-macOS.a */,
+				F56913C50356A90D1A6D28A5 /* Pods_MatrixSDK_MatrixSDK_iOS.framework */,
+				6C5E0A1160D7EF314F477352 /* Pods_MatrixSDK_MatrixSDK_macOS.framework */,
+				93D6B0207532AE1A2CD80448 /* Pods_MatrixSDKTests_iOS.framework */,
+				D11CF0EFD8711AB2570E65BF /* Pods_MatrixSDKTests_macOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3399,7 +3400,6 @@
 		322985C526FA66FD001890BC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				ED6E87A7294B3B9900100D9C /* Logs */,
 				322985CA26FAF898001890BC /* MXSession.swift */,
 				322985CE26FBAE7B001890BC /* TestObserver.swift */,
 				322985D126FC9E61001890BC /* MXSessionTracker.swift */,
@@ -5448,14 +5448,6 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
-		ED6E87A7294B3B9900100D9C /* Logs */ = {
-			isa = PBXGroup;
-			children = (
-				ED6E87A8294B3BAB00100D9C /* MXAnalyticsDestinationUnitTests.swift */,
-			);
-			path = Logs;
-			sourceTree = "<group>";
-		};
 		ED7019ED2886CA6C00FC31B9 /* Verification */ = {
 			isa = PBXGroup;
 			children = (
@@ -7194,7 +7186,6 @@
 				32BD34BE1E84134A006EDC0D /* MatrixSDKTestsE2EData.m in Sources */,
 				EDC8C40E2968C37F003792C5 /* MXKeysQuerySchedulerUnitTests.swift in Sources */,
 				ED751DAE28EDEC7E003748C3 /* MXKeyVerificationStateResolverUnitTests.swift in Sources */,
-				ED6E87A9294B3BAB00100D9C /* MXAnalyticsDestinationUnitTests.swift in Sources */,
 				B146D4FE21A5C0BD00D8C2C6 /* MXEventScanStoreUnitTests.m in Sources */,
 				EDF1B6932876CD8600BBBCEE /* MXTaskQueueUnitTests.swift in Sources */,
 				32684CB821085F770046D2F9 /* MXLazyLoadingTests.m in Sources */,
@@ -7291,6 +7282,7 @@
 				329571931B0240CE00ABB3BA /* MXVoIPTests.m in Sources */,
 				ED8F1D322885AC5700F897E7 /* Device+Stub.swift in Sources */,
 				EDE1B13B28B7BEAB000DEEE8 /* MXCrossSigningV2UnitTests.swift in Sources */,
+				EDA40A1B29E9E2BF00C0CAB9 /* LegacyRealmStore.swift in Sources */,
 				EC746C56274E5197002AD24C /* MXThreadingServiceUnitTests.swift in Sources */,
 				ED8F1D252885A39800F897E7 /* MXCrossSigningInfoSourceUnitTests.swift in Sources */,
 				ED6DAC1E28C79D2000ECDCB6 /* MXUnrequestedForwardedRoomKeyManagerUnitTests.swift in Sources */,
@@ -7299,6 +7291,7 @@
 				32FCAB4D19E578860049C555 /* MXRestClientTests.m in Sources */,
 				32C78BA7256D227D008130B1 /* MXCryptoMigrationTests.m in Sources */,
 				ED7019F92886CA6C00FC31B9 /* SasStub.swift in Sources */,
+				EDA40A0529E9D6BE00C0CAB9 /* MXKeyProviderStub.swift in Sources */,
 				ED21F68528104DA2002FF83D /* MXMegolmEncryptionTests.swift in Sources */,
 				ED44F01A28180F4000452A5D /* MXSharedHistoryKeyManagerUnitTests.swift in Sources */,
 				322985CB26FAF898001890BC /* MXSession.swift in Sources */,
@@ -7831,7 +7824,6 @@
 				B1E09A452397FD990057C069 /* MXLazyLoadingTests.m in Sources */,
 				EDC8C40D2968C37E003792C5 /* MXKeysQuerySchedulerUnitTests.swift in Sources */,
 				ED751DAF28EDEC7E003748C3 /* MXKeyVerificationStateResolverUnitTests.swift in Sources */,
-				ED6E87AA294B3BAB00100D9C /* MXAnalyticsDestinationUnitTests.swift in Sources */,
 				B1E09A1C2397FCE90057C069 /* MXEventAnnotationUnitTests.swift in Sources */,
 				B1E09A262397FCE90057C069 /* MXPushRuleUnitTests.m in Sources */,
 				EDF1B6942876CD8600BBBCEE /* MXTaskQueueUnitTests.swift in Sources */,
@@ -7929,6 +7921,7 @@
 				18937E7D273A5AE500902626 /* MXPollRelationTests.m in Sources */,
 				B1E09A352397FD7D0057C069 /* MXEventTests.m in Sources */,
 				EDE1B13C28B7BEAB000DEEE8 /* MXCrossSigningV2UnitTests.swift in Sources */,
+				EDA40A1C29E9E2BF00C0CAB9 /* LegacyRealmStore.swift in Sources */,
 				A816248525F60D0300A46F05 /* MXDeviceListOperationsPoolUnitTests.swift in Sources */,
 				EC746C57274E5197002AD24C /* MXThreadingServiceUnitTests.swift in Sources */,
 				ED6DAC1F28C79D2000ECDCB6 /* MXUnrequestedForwardedRoomKeyManagerUnitTests.swift in Sources */,
@@ -7937,6 +7930,7 @@
 				EC116598270FCA8B0089FA56 /* MXBackgroundTaskUnitTests.swift in Sources */,
 				B1E09A322397FD750057C069 /* MXRoomTests.m in Sources */,
 				ED7019FA2886CA6C00FC31B9 /* SasStub.swift in Sources */,
+				EDA40A0629E9D6BE00C0CAB9 /* MXKeyProviderStub.swift in Sources */,
 				ED21F68628104DA2002FF83D /* MXMegolmEncryptionTests.swift in Sources */,
 				ED44F01B28180F4000452A5D /* MXSharedHistoryKeyManagerUnitTests.swift in Sources */,
 				322985CC26FAF898001890BC /* MXSession.swift in Sources */,
@@ -8040,7 +8034,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				OTHER_SWIFT_FLAGS = "-D DEBUG -D IS_TEST_RUN";
 				SDKROOT = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;

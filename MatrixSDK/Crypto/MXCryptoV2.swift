@@ -15,7 +15,7 @@
 //
 
 import Foundation
-import MatrixSDKCrypto
+@_implementationOnly import MatrixSDKCrypto
 
 /// An implementation of `MXCrypto` which uses [matrix-rust-sdk](https://github.com/matrix-org/matrix-rust-sdk/tree/main/crates/matrix-sdk-crypto)
 /// under the hood.
@@ -225,8 +225,6 @@ class MXCryptoV2: NSObject, MXCrypto {
         log.debug("Encrypting content of type `\(eventType)`")
         
         let startDate = Date()
-        let stopTracking =  MXSDKOptions.sharedInstance().analyticsDelegate?
-            .startDurationTracking(forName: "MXCryptoV2", operation: "encryptEventContent")
         
         Task {
             do {
@@ -235,8 +233,7 @@ class MXCryptoV2: NSObject, MXCrypto {
                     eventType: eventType,
                     in: room
                 )
-                
-                stopTracking?()
+
                 let duration = Date().timeIntervalSince(startDate) * 1000
                 log.debug("Encrypted in \(duration) ms")
                 

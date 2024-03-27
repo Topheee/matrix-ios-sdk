@@ -38,7 +38,6 @@
 @property (nonatomic) MXAggregatedReactionsUpdater *aggregatedReactionsUpdater;
 @property (nonatomic) MXAggregatedEditsUpdater *aggregatedEditsUpdater;
 @property (nonatomic) MXAggregatedReferencesUpdater *aggregatedReferencesUpdater;
-@property (nonatomic) MXAggregatedPollsUpdater *aggregatedPollsUpdater;
 
 @end
 
@@ -243,8 +242,6 @@
                                                                                   matrixStore:mxSession.store];
         self.aggregatedReferencesUpdater = [[MXAggregatedReferencesUpdater alloc] initWithMatrixSession:self.mxSession
                                                                                            matrixStore:mxSession.store];
-        self.aggregatedPollsUpdater = [[MXAggregatedPollsUpdater alloc] initWithSession:self.mxSession
-                                                                                  store:self.mxSession.store];
         
         [self registerListener];
     }
